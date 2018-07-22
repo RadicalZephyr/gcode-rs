@@ -213,6 +213,8 @@
 <span id="213">213</span>
 <span id="214">214</span>
 <span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! A FFI interface to the `gcode` library.</span>
 <span class="doccomment">//!</span>
@@ -283,9 +285,11 @@
         <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SIZE_OF_GCODE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">312</span>;
     } <span class="kw">else</span> <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;32&quot;</span>)]</span> {
         <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SIZE_OF_PARSER</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">36</span>;
-        <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SIZE_OF_GCODE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">156</span>;
+        <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SIZE_OF_GCODE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">196</span>;
     } <span class="kw">else</span> {
-        <span class="macro">compile_error</span><span class="macro">!</span>(<span class="string">&quot;FFI bindings aren&#39;t (yet) supported on this platform because we can&#39;t determine size of `Parser` or `Gcode`&quot;</span>);
+        <span class="macro">compile_error</span><span class="macro">!</span>(<span class="string">&quot;FFI bindings aren&#39;t (yet) supported on this platform \
+                        because we can&#39;t statically determine size of `Parser` \
+                        and `Gcode`&quot;</span>);
     }
 }
 
