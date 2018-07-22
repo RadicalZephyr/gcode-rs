@@ -80,6 +80,8 @@
 <span id="80">80</span>
 <span id="81">81</span>
 <span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! A gcode parsing library designed for `no_std` environments.</span>
 <span class="doccomment">//!</span>
@@ -146,6 +148,7 @@
         <span class="ident">unused_qualifications</span>)]</span>
 
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">arrayvec</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;ffi&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">macro_use</span>]</span>
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">cfg_if</span>;
 
@@ -159,6 +162,7 @@
 <span class="kw">mod</span> <span class="ident">lexer</span>;
 <span class="kw">mod</span> <span class="ident">parse</span>;
 <span class="kw">mod</span> <span class="ident">types</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;ffi&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">ffi</span>;
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">parse</span>::{<span class="ident">parse</span>, <span class="ident">Parser</span>};
