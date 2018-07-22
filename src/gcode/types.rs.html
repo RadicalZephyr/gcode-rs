@@ -194,6 +194,9 @@
 <span id="194">194</span>
 <span id="195">195</span>
 <span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">arrayvec</span>::<span class="ident">ArrayVec</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">cmp</span>;
@@ -310,6 +313,7 @@
 
 <span class="doccomment">/// A single `Word` in the `gcode` language (e.g. `X-12.3`).</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Word</span> {
     <span class="doccomment">/// The letter associated with this word (e.g. the `X` in `X12.3`).</span>
     <span class="kw">pub</span> <span class="ident">letter</span>: <span class="ident">char</span>,
@@ -328,6 +332,7 @@
 
 <span class="doccomment">/// A general command category.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Hash</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Mnemonic</span> {
     <span class="doccomment">/// A program number (`O555`).</span>
     <span class="ident">ProgramNumber</span>,
@@ -351,6 +356,7 @@
 <span class="doccomment">/// The indices are set up such that `&amp;original_text[start .. end]` will yield</span>
 <span class="doccomment">/// the selected text.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Hash</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Span</span> {
     <span class="doccomment">/// The starting index.</span>
     <span class="kw">pub</span> <span class="ident">start</span>: <span class="ident">usize</span>,
