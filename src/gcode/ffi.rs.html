@@ -204,17 +204,6 @@
 <span id="204">204</span>
 <span id="205">205</span>
 <span id="206">206</span>
-<span id="207">207</span>
-<span id="208">208</span>
-<span id="209">209</span>
-<span id="210">210</span>
-<span id="211">211</span>
-<span id="212">212</span>
-<span id="213">213</span>
-<span id="214">214</span>
-<span id="215">215</span>
-<span id="216">216</span>
-<span id="217">217</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! A FFI interface to the `gcode` library.</span>
 <span class="doccomment">//!</span>
@@ -266,7 +255,6 @@
 <span class="doccomment">//!     assert_eq!(num_gcodes, 2);</span>
 <span class="doccomment">//!     assert_eq!(cumulative_x, -52.4);</span>
 <span class="doccomment">//!     assert_eq!(cumulative_y, 0.0);</span>
-<span class="doccomment">//!     ffi::parser_destroy(parser);</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 
@@ -403,16 +391,6 @@
         } 
         <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
     }
-}
-
-<span class="doccomment">/// Destroy a `Parser` once it is no longer needed.</span>
-<span class="attribute">#[<span class="ident">no_mangle</span>]</span>
-<span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">parser_destroy</span>(<span class="ident">parser</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Parser</span>) {
-    <span class="kw">if</span> <span class="ident">parser</span>.<span class="ident">is_null</span>() {
-        <span class="kw">return</span>;
-    }
-
-    <span class="ident">ptr</span>::<span class="ident">drop_in_place</span>(<span class="ident">parser</span>);
 }
 
 
