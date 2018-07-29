@@ -199,11 +199,6 @@
 <span id="199">199</span>
 <span id="200">200</span>
 <span id="201">201</span>
-<span id="202">202</span>
-<span id="203">203</span>
-<span id="204">204</span>
-<span id="205">205</span>
-<span id="206">206</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! A FFI interface to the `gcode` library.</span>
 <span class="doccomment">//!</span>
@@ -309,13 +304,9 @@
     <span class="comment">// create our parser, Parser&lt;&#39;input&gt;</span>
     <span class="kw">let</span> <span class="ident">local_parser</span> <span class="op">=</span> <span class="ident">Parser</span>::<span class="ident">new</span>(<span class="ident">src</span>);
     
-    <span class="comment">// Copy it to the destination</span>
-    <span class="ident">ptr</span>::<span class="ident">copy_nonoverlapping</span>(<span class="kw-2">&amp;</span><span class="ident">local_parser</span>, <span class="ident">parser</span>, <span class="number">1</span>);
+    <span class="comment">// Copy it to the destination, passing ownership to the caller</span>
+    <span class="ident">ptr</span>::<span class="ident">write</span>(<span class="ident">parser</span>, <span class="ident">local_parser</span>);
     
-    <span class="comment">// it is now the caller&#39;s responsibility to clean up `parser`, forget our</span>
-    <span class="comment">// local copy</span>
-    <span class="ident">mem</span>::<span class="ident">forget</span>(<span class="ident">local_parser</span>);
-
     <span class="bool-val">true</span>
 }
 
@@ -327,8 +318,7 @@
 
     <span class="kw">match</span> <span class="ident">parser</span>.<span class="ident">next</span>() {
         <span class="prelude-val">Some</span>(<span class="ident">got</span>) <span class="op">=&gt;</span> {
-            <span class="ident">ptr</span>::<span class="ident">copy_nonoverlapping</span>(<span class="kw-2">&amp;</span><span class="ident">got</span>, <span class="ident">gcode</span>, <span class="number">1</span>);
-            <span class="ident">mem</span>::<span class="ident">forget</span>(<span class="ident">got</span>);
+            <span class="ident">ptr</span>::<span class="ident">write</span>(<span class="ident">gcode</span>, <span class="ident">got</span>);
             <span class="bool-val">true</span>
         }
         <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
