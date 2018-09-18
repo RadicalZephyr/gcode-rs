@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `gcode` crate."><meta name="keywords" content="rust, rustlang, rust-lang, gcode"><title>gcode - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><p class='location'>Crate gcode</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#constants">Constants</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'gcode', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='in-band'>Crate <a class="mod" href=''>gcode</a></span><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/gcode/lib.rs.html#1-141' title='goto source code'>[src]</a></span></h1><div class='docblock'><p>A gcode parsing library designed for <code>no_std</code> environments.</p>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `gcode` crate."><meta name="keywords" content="rust, rustlang, rust-lang, gcode"><title>gcode - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><p class='location'>Crate gcode</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#constants">Constants</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'gcode', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='in-band'>Crate <a class="mod" href=''>gcode</a></span><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/gcode/lib.rs.html#1-143' title='goto source code'>[src]</a></span></h1><div class='docblock'><p>A gcode parsing library designed for <code>no_std</code> environments.</p>
 <h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
 <p>The <code>gcode</code> API is extremely minimal, containing a single <code>parse()</code>
 function which takes a string and returns an iterator over the <code>Gcode</code>s it
@@ -17,8 +17,8 @@ sees.</p>
 
 <span class="kw">let</span> <span class="ident">src</span> <span class="op">=</span> <span class="string">&quot;O1000
     T1 M6
-    G90 
-    G01 X-75 Y-75 S500 M3 
+    G90
+    G01 X-75 Y-75 S500 M3
     G43 Z100 H1
     G01 Z5
     N20 G01 Z-20 F100&quot;</span>;
@@ -47,7 +47,7 @@ sees.</p>
 <h1 id="ffi-bindings" class="section-header"><a href="#ffi-bindings">FFI Bindings</a></h1>
 <p>The <code>ffi</code> feature (disabled by default) will also generate FFI bindings for
 calling the library from a non-Rust language. The FFI bindings are unstable
-and will probably change from version to version.</p>
+and no stability guarantees are made about them.</p>
 <p>A C-style header file can be generated by running the <code>cbindgen</code> program
 from this repository's root directory.</p>
 <pre><code class="language-console">$ cargo install cbindgen
@@ -62,7 +62,7 @@ $ ls target/release/libgcode.*
 libgcode.a  libgcode.rlib  libgcode.so
 
 # Print out some of the available function symbols
-$ nm target/release/libgcode.so | grep ' T gcode\|parser' | grep -v '_Z' 
+$ nm target/release/libgcode.so | grep ' T gcode\|parser' | grep -v '_Z'
 0000000000005e10 T gcode_args
 0000000000005e20 T gcode_arg_value
 0000000000005ef0 T gcode_line_number

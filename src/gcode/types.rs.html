@@ -265,10 +265,18 @@
 <span id="265">265</span>
 <span id="266">266</span>
 <span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">arrayvec</span>::<span class="ident">ArrayVec</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">cmp</span>;
-<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Formatter</span>, <span class="ident">Display</span>};
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Display</span>, <span class="ident">Formatter</span>};
 
 <span class="doccomment">/// The maximum number of arguments a `Gcode` can have.</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX_ARGS</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">8</span>;
@@ -374,7 +382,8 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">value_for</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">letter</span>: <span class="ident">char</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f32</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">letter</span> <span class="op">=</span> <span class="ident">letter</span>.<span class="ident">to_ascii_uppercase</span>();
 
-        <span class="self">self</span>.<span class="ident">arguments</span>.<span class="ident">iter</span>()
+        <span class="self">self</span>.<span class="ident">arguments</span>
+            .<span class="ident">iter</span>()
             .<span class="ident">find</span>(<span class="op">|</span><span class="ident">word</span><span class="op">|</span> <span class="ident">letter</span> <span class="op">==</span> <span class="ident">word</span>.<span class="ident">letter</span>)
             .<span class="ident">map</span>(<span class="op">|</span><span class="ident">word</span><span class="op">|</span> <span class="ident">word</span>.<span class="ident">value</span>)
     }
@@ -412,7 +421,11 @@
 <span class="kw">impl</span> <span class="ident">Word</span> {
     <span class="doccomment">/// Create a new `Word`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">letter</span>: <span class="ident">char</span>, <span class="ident">value</span>: <span class="ident">f32</span>, <span class="ident">span</span>: <span class="ident">Span</span>) <span class="op">-&gt;</span> <span class="ident">Word</span> {
-        <span class="ident">Word</span> { <span class="ident">letter</span>, <span class="ident">value</span>, <span class="ident">span</span> }
+        <span class="ident">Word</span> {
+            <span class="ident">letter</span>,
+            <span class="ident">value</span>,
+            <span class="ident">span</span>,
+        }
     }
 }
 
@@ -498,7 +511,10 @@
 
     <span class="doccomment">/// Given the original text, retrieve the substring this `Span` corresponds</span>
     <span class="doccomment">/// to.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">selected_text</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">src</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;input</span> <span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;input</span> <span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">selected_text</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span>(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="ident">src</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;input</span> <span class="ident">str</span>,
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;input</span> <span class="ident">str</span><span class="op">&gt;</span> {
         <span class="ident">src</span>.<span class="ident">get</span>(<span class="self">self</span>.<span class="ident">start</span>..<span class="self">self</span>.<span class="ident">end</span>)
     }
 }
@@ -510,9 +526,9 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">get_gcode_repr</span>() {
         <span class="kw">let</span> <span class="ident">thing</span> <span class="op">=</span> <span class="ident">Gcode</span>::<span class="ident">new</span>(<span class="ident">Mnemonic</span>::<span class="ident">General</span>, <span class="number">1.2</span>, <span class="ident">Span</span>::<span class="ident">default</span>())
-                .<span class="ident">with_line_number</span>(<span class="number">10</span>, <span class="ident">Span</span>::<span class="ident">default</span>())
-                .<span class="ident">with_argument</span>(<span class="ident">Word</span>::<span class="ident">new</span>(<span class="string">&#39;X&#39;</span>, <span class="number">500.0</span>, <span class="ident">Span</span>::<span class="ident">default</span>()))
-                .<span class="ident">with_argument</span>(<span class="ident">Word</span>::<span class="ident">new</span>(<span class="string">&#39;Y&#39;</span>, <span class="op">-</span><span class="number">1.23</span>, <span class="ident">Span</span>::<span class="ident">default</span>()));
+            .<span class="ident">with_line_number</span>(<span class="number">10</span>, <span class="ident">Span</span>::<span class="ident">default</span>())
+            .<span class="ident">with_argument</span>(<span class="ident">Word</span>::<span class="ident">new</span>(<span class="string">&#39;X&#39;</span>, <span class="number">500.0</span>, <span class="ident">Span</span>::<span class="ident">default</span>()))
+            .<span class="ident">with_argument</span>(<span class="ident">Word</span>::<span class="ident">new</span>(<span class="string">&#39;Y&#39;</span>, <span class="op">-</span><span class="number">1.23</span>, <span class="ident">Span</span>::<span class="ident">default</span>()));
         <span class="kw">let</span> <span class="ident">should_be</span> <span class="op">=</span> <span class="string">&quot;N10 G1.2 X500 Y-1.23&quot;</span>;
 
         <span class="kw">let</span> <span class="ident">got</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">thing</span>);
@@ -522,9 +538,9 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">you_can_round_trip_a_gcode</span>() {
         <span class="kw">let</span> <span class="ident">original</span> <span class="op">=</span> <span class="ident">Gcode</span>::<span class="ident">new</span>(<span class="ident">Mnemonic</span>::<span class="ident">General</span>, <span class="number">1.2</span>, <span class="ident">Span</span>::<span class="ident">new</span>(<span class="number">0</span>, <span class="number">20</span>, <span class="number">0</span>))
-                .<span class="ident">with_line_number</span>(<span class="number">10</span>, <span class="ident">Span</span>::<span class="ident">default</span>())
-                .<span class="ident">with_argument</span>(<span class="ident">Word</span>::<span class="ident">new</span>(<span class="string">&#39;X&#39;</span>, <span class="number">500.0</span>, <span class="ident">Span</span>::<span class="ident">new</span>(<span class="number">9</span>, <span class="number">13</span>, <span class="number">0</span>)))
-                .<span class="ident">with_argument</span>(<span class="ident">Word</span>::<span class="ident">new</span>(<span class="string">&#39;Y&#39;</span>, <span class="op">-</span><span class="number">1.23</span>, <span class="ident">Span</span>::<span class="ident">new</span>(<span class="number">14</span>, <span class="number">20</span>, <span class="number">0</span>)));
+            .<span class="ident">with_line_number</span>(<span class="number">10</span>, <span class="ident">Span</span>::<span class="ident">default</span>())
+            .<span class="ident">with_argument</span>(<span class="ident">Word</span>::<span class="ident">new</span>(<span class="string">&#39;X&#39;</span>, <span class="number">500.0</span>, <span class="ident">Span</span>::<span class="ident">new</span>(<span class="number">9</span>, <span class="number">13</span>, <span class="number">0</span>)))
+            .<span class="ident">with_argument</span>(<span class="ident">Word</span>::<span class="ident">new</span>(<span class="string">&#39;Y&#39;</span>, <span class="op">-</span><span class="number">1.23</span>, <span class="ident">Span</span>::<span class="ident">new</span>(<span class="number">14</span>, <span class="number">20</span>, <span class="number">0</span>)));
 
         <span class="kw">let</span> <span class="ident">serialized</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">original</span>);
 
