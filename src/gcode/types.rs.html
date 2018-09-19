@@ -304,6 +304,43 @@
 <span id="304">304</span>
 <span id="305">305</span>
 <span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
+<span id="343">343</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">arrayvec</span>::<span class="ident">ArrayVec</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">cmp</span>;
@@ -349,6 +386,11 @@
     <span class="doccomment">/// The arguments provided to the `Gcode`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">args</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">Word</span>] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">arguments</span>
+    }
+
+    <span class="doccomment">/// Get a mutable reference to the `Gcode`&#39;s arguments.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">args_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">Word</span>] {
+        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">arguments</span>
     }
 
     <span class="doccomment">/// Get the line number given to this gode (e.g. the `20` in `N20 G04 P100`).</span>
@@ -560,6 +602,7 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
     <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
+    <span class="kw">use</span> <span class="ident">parse</span>::<span class="ident">parse</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">get_gcode_repr</span>() {
@@ -608,6 +651,37 @@
 
             <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">g</span>.<span class="ident">major_number</span>(), <span class="ident">major</span>);
             <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">g</span>.<span class="ident">minor_number</span>(), <span class="ident">minor</span>);
+        }
+    }
+
+    <span class="doccomment">/// An example of applying a transform to `Gcode`s on the fly, from</span>
+    <span class="doccomment">/// @MicroJoe in Michael-F-Bryan/gcode-rs#4</span>
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">transform_gcodes_on_the_fly</span>() {
+        <span class="kw">fn</span> <span class="ident">translate_x</span>(<span class="kw-2">mut</span> <span class="ident">code</span>: <span class="ident">Gcode</span>, <span class="ident">dx</span>: <span class="ident">f32</span>) <span class="op">-&gt;</span> <span class="ident">Gcode</span> {
+            <span class="kw">for</span> <span class="ident">arg</span> <span class="kw">in</span> <span class="ident">code</span>.<span class="ident">args_mut</span>() {
+                <span class="kw">if</span> <span class="ident">arg</span>.<span class="ident">letter</span> <span class="op">==</span> <span class="string">&#39;X&#39;</span> {
+                    <span class="ident">arg</span>.<span class="ident">value</span> <span class="op">+=</span> <span class="ident">dx</span>;
+                }
+            }
+
+            <span class="ident">code</span>
+        }
+
+        <span class="kw">let</span> <span class="ident">src</span> <span class="op">=</span> <span class="string">&quot;O1000
+                   T1 M6
+                   G90
+                   G01 X-75 Y-75 S500 M3
+                   G43 Z100 H1
+                   G01 Z5
+                   N20 G01 Z-20 F100&quot;</span>;
+
+        <span class="kw">let</span> <span class="ident">dx</span> <span class="op">=</span> <span class="number">42.0</span>;
+
+        <span class="kw">let</span> <span class="ident">translated</span> <span class="op">=</span> <span class="ident">parse</span>(<span class="ident">src</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">g</span><span class="op">|</span> <span class="ident">translate_x</span>(<span class="ident">g</span>, <span class="ident">dx</span>));
+
+        <span class="kw">for</span> <span class="ident">code</span> <span class="kw">in</span> <span class="ident">translated</span> {
+            <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">code</span>);
         }
     }
 }
