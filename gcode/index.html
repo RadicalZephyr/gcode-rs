@@ -1,158 +1,25 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `gcode` crate."><meta name="keywords" content="rust, rustlang, rust-lang, gcode"><title>gcode - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><p class='location'>Crate gcode</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#constants">Constants</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'gcode', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='in-band'>Crate <a class="mod" href=''>gcode</a></span><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/gcode/lib.rs.html#1-143' title='goto source code'>[src]</a></span></h1><div class='docblock'><p>A gcode parsing library designed for <code>no_std</code> environments.</p>
-<h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
-<p>The <code>gcode</code> API is extremely minimal, containing a single <code>parse()</code>
-function which takes a string and returns an iterator over the <code>Gcode</code>s it
-contains.</p>
-<p>Parsing is done on a best-effort basis, with any syntax errors being
-silently ignored. Because of this, you'll probably want to ensure a file is
-well formed.</p>
-<blockquote>
-<p><strong>Note:</strong> The <a href="https://github.com/Michael-F-Bryan/gcode-rs/tree/master/examples">examples/</a> folder in this project's repository contains a
-simple program that will read an input file and print out any <code>Gcode</code>s it
-sees.</p>
-</blockquote>
-
-<pre class="rust rust-example-rendered">
-<span class="kw">use</span> <span class="ident">gcode</span>::<span class="ident">Mnemonic</span>;
-
-<span class="kw">let</span> <span class="ident">src</span> <span class="op">=</span> <span class="string">&quot;O1000
-    T1 M6
-    G90
-    G01 X-75 Y-75 S500 M3
-    G43 Z100 H1
-    G01 Z5
-    N20 G01 Z-20 F100&quot;</span>;
-
-<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">lines</span> <span class="op">=</span> <span class="ident">gcode</span>::<span class="ident">parse</span>(<span class="ident">src</span>);
-
-<span class="kw">let</span> <span class="ident">program_number</span> <span class="op">=</span> <span class="ident">lines</span>.<span class="ident">next</span>().<span class="ident">unwrap</span>();
-<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">program_number</span>.<span class="ident">major_number</span>(), <span class="number">1000</span>);
-
-<span class="kw">let</span> <span class="ident">tool_change</span> <span class="op">=</span> <span class="ident">lines</span>.<span class="ident">next</span>().<span class="ident">unwrap</span>();
-<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">tool_change</span>.<span class="ident">mnemonic</span>(), <span class="ident">Mnemonic</span>::<span class="ident">ToolChange</span>);
-<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">tool_change</span>.<span class="ident">major_number</span>(), <span class="number">1</span>);
-
-<span class="comment">// skip the M6 and G90</span>
-<span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">lines</span>.<span class="ident">next</span>();
-<span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">lines</span>.<span class="ident">next</span>();
-
-<span class="kw">let</span> <span class="ident">g01</span> <span class="op">=</span> <span class="ident">lines</span>.<span class="ident">next</span>().<span class="ident">unwrap</span>();
-<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">g01</span>.<span class="ident">major_number</span>(), <span class="number">1</span>);
-<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">g01</span>.<span class="ident">args</span>().<span class="ident">len</span>(), <span class="number">3</span>);
-<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">g01</span>.<span class="ident">value_for</span>(<span class="string">&#39;X&#39;</span>), <span class="prelude-val">Some</span>(<span class="op">-</span><span class="number">75.0</span>));
-
-<span class="kw">let</span> <span class="ident">rest</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">lines</span>.<span class="ident">collect</span>();
-<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">rest</span>.<span class="ident">len</span>(), <span class="number">4</span>);
-<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">rest</span>[<span class="number">3</span>].<span class="ident">line_number</span>(), <span class="prelude-val">Some</span>(<span class="number">20</span>));</pre>
-<h1 id="ffi-bindings" class="section-header"><a href="#ffi-bindings">FFI Bindings</a></h1>
-<p>The <code>ffi</code> feature (disabled by default) will also generate FFI bindings for
-calling the library from a non-Rust language. The FFI bindings are unstable
-and no stability guarantees are made about them.</p>
-<p>A C-style header file can be generated by running the <code>cbindgen</code> program
-from this repository's root directory.</p>
-<pre><code class="language-console">$ cargo install cbindgen
-$ git clone https://github.com/Michael-F-Bryan/gcode-rs
-$ cd gcode-rs
-$ cbindgen --output gcode.h
-</code></pre>
-<p>When you compile the library, it will automatically generate dynamic and
-static libraries which can be called from C.</p>
-<pre><code class="language-console">$ cargo build --release
-$ ls target/release/libgcode.*
-libgcode.a  libgcode.rlib  libgcode.so
-
-# Print out some of the available function symbols
-$ nm target/release/libgcode.so | grep ' T gcode\|parser' | grep -v '_Z'
-0000000000005e10 T gcode_args
-0000000000005e20 T gcode_arg_value
-0000000000005ef0 T gcode_line_number
-0000000000005de0 T gcode_major_number
-0000000000005dc0 T gcode_mnemonic
-0000000000005e00 T gcode_num_args
-0000000000005dd0 T gcode_number
-0000000000005ed0 T gcode_span
-0000000000005f10 T parser_destroy
-0000000000005d20 T parser_new
-0000000000005d70 T parser_next
-</code></pre>
-<p>The repository also contains <a href="https://github.com/Michael-F-Bryan/gcode-rs/blob/master/ffi-example/main.c">a basic example</a> showing how this library can
-be used from a normal C program.</p>
-</div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `gcode` crate."><meta name="keywords" content="rust, rustlang, rust-lang, gcode"><title>gcode - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><p class='location'>Crate gcode</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#reexports">Re-exports</a></li><li><a href="#modules">Modules</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'gcode', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='in-band'>Crate <a class="mod" href=''>gcode</a></span><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/gcode/lib.rs.html#1-26' title='goto source code'>[src]</a></span></h1><h2 id='reexports' class='section-header'><a href="#reexports">Re-exports</a></h2>
+<table><tr><td><code>pub use parser::<a class="struct" href="../gcode/parser/struct.Parser.html" title="struct gcode::parser::Parser">Parser</a>;</code></td></tr><tr><td><code>pub use types::<a class="struct" href="../gcode/types/struct.Gcode.html" title="struct gcode::types::Gcode">Gcode</a>;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class="mod" href="ffi/index.html"
-                                  title='mod gcode::ffi'>ffi</a></td>
+                           <td><a class="mod" href="parser/index.html"
+                                  title='mod gcode::parser'>parser</a></td>
                            <td class='docblock-short'>
-                                <p>A FFI interface to the <code>gcode</code> library.</p>
-
-                           </td>
-                       </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
-<table>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.Gcode.html"
-                                  title='struct gcode::Gcode'>Gcode</a></td>
-                           <td class='docblock-short'>
-                                <p>A single command in the <code>gcode</code> programming language.</p>
-
+                                
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class="struct" href="struct.Parser.html"
-                                  title='struct gcode::Parser'>Parser</a></td>
+                           <td><a class="mod" href="types/index.html"
+                                  title='mod gcode::types'>types</a></td>
                            <td class='docblock-short'>
-                                <p>A gcode parser which is extremely permissive in what input it will accept.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.Span.html"
-                                  title='struct gcode::Span'>Span</a></td>
-                           <td class='docblock-short'>
-                                <p>A set of byte indices which correspond to the location of a substring in
-a larger piece of text.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.Word.html"
-                                  title='struct gcode::Word'>Word</a></td>
-                           <td class='docblock-short'>
-                                <p>A single <code>Word</code> in the <code>gcode</code> language (e.g. <code>X-12.3</code>).</p>
-
-                           </td>
-                       </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
-<table>
-                       <tr class=' module-item'>
-                           <td><a class="enum" href="enum.Mnemonic.html"
-                                  title='enum gcode::Mnemonic'>Mnemonic</a></td>
-                           <td class='docblock-short'>
-                                <p>A general command category.</p>
-
-                           </td>
-                       </tr></table><h2 id='constants' class='section-header'><a href="#constants">Constants</a></h2>
-<table>
-                       <tr class=' module-item'>
-                           <td><a class="constant" href="constant.MAX_ARGS.html"
-                                  title='constant gcode::MAX_ARGS'>MAX_ARGS</a></td>
-                           <td class='docblock-short'>
-                                <p>The maximum number of arguments a <code>Gcode</code> can have.</p>
-
+                                
                            </td>
                        </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class="fn" href="fn.dump.html"
-                                  title='fn gcode::dump'>dump</a></td>
-                           <td class='docblock-short'>
-                                <p>Print a bunch of gcodes as ASCII text.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
                            <td><a class="fn" href="fn.parse.html"
                                   title='fn gcode::parse'>parse</a></td>
                            <td class='docblock-short'>
-                                <p>Parse a string of text into a stream of <code>Gcode</code>s.</p>
-
+                                
                            </td>
                        </tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><aside id="help" class="hidden"><div><h1 class="hidden">Help</h1><div class="shortcuts"><h2>Keyboard Shortcuts</h2><dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd><dt><kbd>S</kbd></dt><dd>Focus the search field</dd><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd><dt><kbd>↹</kbd></dt><dd>Switch tab</dd><dt><kbd>&#9166;</kbd></dt><dd>Go to active search result</dd><dt><kbd>+</kbd></dt><dd>Expand all sections</dd><dt><kbd>-</kbd></dt><dd>Collapse all sections</dd></dl></div><div class="infos"><h2>Search Tricks</h2><p>Prefix searches with a type followed by a colon (e.g. <code>fn:</code>) to restrict the search to a given type.</p><p>Accepted types are: <code>fn</code>, <code>mod</code>, <code>struct</code>, <code>enum</code>, <code>trait</code>, <code>type</code>, <code>macro</code>, and <code>const</code>.</p><p>Search functions by type signature (e.g. <code>vec -> usize</code> or <code>* -> vec</code>)</p><p>Search multiple things at once by splitting your query with comma (e.g. <code>str,u8</code> or <code>String,struct:Vec,test</code>)</p></div></div></aside><script>window.rootPath = "../";window.currentCrate = "gcode";</script><script src="../aliases.js"></script><script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>

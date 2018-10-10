@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["Mnemonic","The general category a `Gcode` belongs to."]],"struct":[["Argument","A command argument."],["Block","A block containing `Gcode` commands and/or comments."],["Comment","A comment."],["Gcode","A single gcode command."],["Span",""]]});
