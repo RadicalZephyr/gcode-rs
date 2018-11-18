@@ -541,6 +541,14 @@
 <span id="541">541</span>
 <span id="542">542</span>
 <span id="543">543</span>
+<span id="544">544</span>
+<span id="545">545</span>
+<span id="546">546</span>
+<span id="547">547</span>
+<span id="548">548</span>
+<span id="549">549</span>
+<span id="550">550</span>
+<span id="551">551</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">lexer</span>::{<span class="ident">Lexer</span>, <span class="ident">Token</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">types</span>::{
@@ -720,7 +728,12 @@
             }
 
             <span class="kw">match</span> <span class="self">self</span>.<span class="ident">parse_command</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">block</span>.<span class="ident">push_comment</span>(<span class="ident">c</span>)) {
-                <span class="prelude-val">Some</span>(<span class="ident">cmd</span>) <span class="op">=&gt;</span> <span class="ident">block</span>.<span class="ident">push_command</span>(<span class="ident">cmd</span>),
+                <span class="prelude-val">Some</span>(<span class="kw-2">mut</span> <span class="ident">cmd</span>) <span class="op">=&gt;</span> {
+                    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">line</span>) <span class="op">=</span> <span class="ident">block</span>.<span class="ident">line_number</span>() {
+                        <span class="ident">cmd</span> <span class="op">=</span> <span class="ident">cmd</span>.<span class="ident">with_line_number</span>(<span class="ident">line</span>);
+                    }
+                    <span class="ident">block</span>.<span class="ident">push_command</span>(<span class="ident">cmd</span>);
+                }
                 <span class="prelude-val">None</span> <span class="op">=&gt;</span> {
                     <span class="self">self</span>.<span class="ident">fast_forward_to_safe_point</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">block</span>.<span class="ident">push_comment</span>(<span class="ident">c</span>))
                 }
@@ -1037,12 +1050,15 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">g00</span>.<span class="ident">major_number</span>(), <span class="number">0</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">g00</span>.<span class="ident">args</span>().<span class="ident">len</span>(), <span class="number">1</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">g00</span>.<span class="ident">value_for</span>(<span class="string">&#39;z&#39;</span>), <span class="prelude-val">Some</span>(<span class="op">-</span><span class="number">0.5</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">g00</span>.<span class="ident">span</span>(), <span class="ident">Span</span>::<span class="ident">new</span>(<span class="number">4</span>, <span class="number">14</span>, <span class="number">0</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">g00</span>.<span class="ident">line_number</span>(), <span class="prelude-val">Some</span>(<span class="number">42</span>));
 
         <span class="kw">let</span> <span class="ident">g02</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">commands</span>[<span class="number">1</span>];
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">g02</span>.<span class="ident">major_number</span>(), <span class="number">2</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">g02</span>.<span class="ident">args</span>().<span class="ident">len</span>(), <span class="number">2</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">g02</span>.<span class="ident">value_for</span>(<span class="string">&#39;X&#39;</span>), <span class="prelude-val">Some</span>(<span class="number">5.0</span>));
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">g02</span>.<span class="ident">value_for</span>(<span class="string">&#39;I&#39;</span>), <span class="prelude-val">Some</span>(<span class="number">100.0</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">g00</span>.<span class="ident">line_number</span>(), <span class="prelude-val">Some</span>(<span class="number">42</span>));
 
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">block</span>.<span class="ident">comments</span>().<span class="ident">len</span>(), <span class="number">1</span>);
         <span class="kw">let</span> <span class="ident">comment</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">block</span>.<span class="ident">comments</span>()[<span class="number">0</span>];
