@@ -24,6 +24,10 @@
 <span id="24">24</span>
 <span id="25">25</span>
 <span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
 </pre><pre class="rust ">
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>), <span class="ident">no_std</span>)]</span>
 
@@ -42,12 +46,16 @@
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">pretty_assertions</span>;
 
 <span class="kw">mod</span> <span class="ident">lexer</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">parser</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">types</span>;
+<span class="kw">mod</span> <span class="ident">parser</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">transforms</span>;
+<span class="kw">mod</span> <span class="ident">types</span>;
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">parser</span>::<span class="ident">Parser</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">types</span>::<span class="ident">Gcode</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">parser</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">transforms</span>::<span class="ident">GcodeTransforms</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">types</span>::<span class="kw-2">*</span>;
 
+<span class="doccomment">/// Convenience function for parsing a string of text into `Gcode`s, ignoring</span>
+<span class="doccomment">/// any errors which may occur.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">parse</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span>(<span class="ident">src</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;input</span> <span class="ident">str</span>) <span class="op">-&gt;</span> <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">Gcode</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;input</span> {
     <span class="ident">Parser</span>::<span class="ident">new</span>(<span class="ident">src</span>).<span class="ident">flat_map</span>(<span class="op">|</span><span class="ident">block</span><span class="op">|</span> <span class="ident">block</span>.<span class="ident">into_commands</span>())
 }

@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["CoordinateMode",""]],"struct":[["State","The internal state of a simple 2-dimensional gantry system."]]});

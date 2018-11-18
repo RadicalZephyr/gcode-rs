@@ -465,11 +465,101 @@
 <span id="465">465</span>
 <span id="466">466</span>
 <span id="467">467</span>
+<span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
+<span id="473">473</span>
+<span id="474">474</span>
+<span id="475">475</span>
+<span id="476">476</span>
+<span id="477">477</span>
+<span id="478">478</span>
+<span id="479">479</span>
+<span id="480">480</span>
+<span id="481">481</span>
+<span id="482">482</span>
+<span id="483">483</span>
+<span id="484">484</span>
+<span id="485">485</span>
+<span id="486">486</span>
+<span id="487">487</span>
+<span id="488">488</span>
+<span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
+<span id="495">495</span>
+<span id="496">496</span>
+<span id="497">497</span>
+<span id="498">498</span>
+<span id="499">499</span>
+<span id="500">500</span>
+<span id="501">501</span>
+<span id="502">502</span>
+<span id="503">503</span>
+<span id="504">504</span>
+<span id="505">505</span>
+<span id="506">506</span>
+<span id="507">507</span>
+<span id="508">508</span>
+<span id="509">509</span>
+<span id="510">510</span>
+<span id="511">511</span>
+<span id="512">512</span>
+<span id="513">513</span>
+<span id="514">514</span>
+<span id="515">515</span>
+<span id="516">516</span>
+<span id="517">517</span>
+<span id="518">518</span>
+<span id="519">519</span>
+<span id="520">520</span>
+<span id="521">521</span>
+<span id="522">522</span>
+<span id="523">523</span>
+<span id="524">524</span>
+<span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
+<span id="529">529</span>
+<span id="530">530</span>
+<span id="531">531</span>
+<span id="532">532</span>
+<span id="533">533</span>
+<span id="534">534</span>
+<span id="535">535</span>
+<span id="536">536</span>
+<span id="537">537</span>
+<span id="538">538</span>
+<span id="539">539</span>
+<span id="540">540</span>
+<span id="541">541</span>
+<span id="542">542</span>
+<span id="543">543</span>
+<span id="544">544</span>
+<span id="545">545</span>
+<span id="546">546</span>
+<span id="547">547</span>
+<span id="548">548</span>
+<span id="549">549</span>
+<span id="550">550</span>
+<span id="551">551</span>
+<span id="552">552</span>
+<span id="553">553</span>
+<span id="554">554</span>
+<span id="555">555</span>
 </pre><pre class="rust ">
-<span class="kw">use</span> <span class="ident">lexer</span>::{<span class="ident">Lexer</span>, <span class="ident">Token</span>, <span class="ident">TokenKind</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">lexer</span>::{<span class="ident">Lexer</span>, <span class="ident">Token</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">types</span>::{
+    <span class="ident">Argument</span>, <span class="ident">Block</span>, <span class="ident">Comment</span>, <span class="ident">Gcode</span>, <span class="ident">Mnemonic</span>, <span class="ident">Span</span>, <span class="ident">TokenKind</span>,
+};
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>))]</span>
 <span class="kw">use</span> <span class="ident">libm</span>::<span class="ident">F32Ext</span>;
-<span class="kw">use</span> <span class="ident">types</span>::{<span class="ident">Argument</span>, <span class="ident">Block</span>, <span class="ident">Comment</span>, <span class="ident">Gcode</span>, <span class="ident">Mnemonic</span>, <span class="ident">Span</span>};
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
 <span class="doccomment">/// An error-resistent streaming gcode parser.</span>
@@ -550,12 +640,6 @@
         <span class="kw">if</span> <span class="ident">block</span>.<span class="ident">is_empty</span>() {
             <span class="prelude-val">None</span>
         } <span class="kw">else</span> {
-            <span class="kw">let</span> <span class="ident">src</span> <span class="op">=</span> <span class="ident">block</span>
-                .<span class="ident">span</span>()
-                .<span class="ident">text_from_source</span>(<span class="self">self</span>.<span class="ident">src</span>)
-                .<span class="ident">expect</span>(<span class="string">&quot;The span should always be valid&quot;</span>);
-            <span class="ident">block</span>.<span class="ident">with_src</span>(<span class="ident">src</span>);
-
             <span class="prelude-val">Some</span>(<span class="ident">block</span>)
         }
     }
@@ -660,9 +744,32 @@
     <span class="doccomment">/// until we see the start of a new command or the end of the block.</span>
     <span class="kw">fn</span> <span class="ident">fast_forward_to_safe_point</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
-        <span class="ident">comments</span>: <span class="kw">impl</span> <span class="ident">FnMut</span>(<span class="ident">Comment</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span>),
+        <span class="kw-2">mut</span> <span class="ident">comments</span>: <span class="kw">impl</span> <span class="ident">FnMut</span>(<span class="ident">Comment</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span>),
     ) {
-        <span class="macro">unimplemented</span><span class="macro">!</span>()
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">overall_span</span> <span class="op">=</span> <span class="ident">Span</span>::<span class="ident">placeholder</span>();
+
+        <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">kind</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">next_kind</span>() {
+            <span class="kw">if</span> <span class="ident">kind</span> <span class="op">==</span> <span class="ident">TokenKind</span>::<span class="ident">Newline</span> {
+                <span class="kw">break</span>;
+            }
+
+            <span class="kw">let</span> (<span class="ident">tok</span>, <span class="ident">span</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">lexer</span>.<span class="ident">next</span>().<span class="ident">expect</span>(<span class="string">&quot;We aren&#39;t at the EOF&quot;</span>);
+            <span class="ident">overall_span</span> <span class="op">=</span> <span class="ident">overall_span</span>.<span class="ident">merge</span>(<span class="ident">span</span>);
+
+            <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Token</span>::<span class="ident">Comment</span>(<span class="ident">body</span>) <span class="op">=</span> <span class="ident">tok</span> {
+                <span class="ident">comments</span>(<span class="ident">Comment</span>::<span class="ident">new</span>(<span class="ident">body</span>, <span class="ident">span</span>));
+            }
+        }
+
+        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
+        <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;Overall span: {:?}&quot;</span>, <span class="ident">overall_span</span>);
+
+        <span class="self">self</span>.<span class="ident">callbacks</span>.<span class="ident">mangled_input</span>(
+            <span class="ident">overall_span</span>
+                .<span class="ident">text_from_source</span>(<span class="self">self</span>.<span class="ident">src</span>)
+                .<span class="ident">expect</span>(<span class="string">&quot;Always within bounds&quot;</span>),
+            <span class="ident">overall_span</span>,
+        );
     }
 
     <span class="kw">fn</span> <span class="ident">parse_command</span>(
@@ -686,13 +793,12 @@
             ),
         };
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cmd</span> <span class="op">=</span> <span class="ident">Gcode</span>::<span class="ident">new</span>(<span class="ident">mnemonic</span>, <span class="ident">value</span>);
-        <span class="ident">cmd</span>.<span class="ident">with_span</span>(<span class="ident">span</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cmd</span> <span class="op">=</span> <span class="ident">Gcode</span>::<span class="ident">new</span>(<span class="ident">mnemonic</span>, <span class="ident">value</span>).<span class="ident">with_span</span>(<span class="ident">span</span>);
 
         <span class="kw">while</span> <span class="self">self</span>.<span class="ident">next_is_argument</span>() {
             <span class="kw">match</span> <span class="self">self</span>.<span class="ident">parse_word</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">comments</span>) {
                 <span class="prelude-val">Some</span>(<span class="ident">arg</span>) <span class="op">=&gt;</span> {
-                    <span class="ident">cmd</span>.<span class="ident">with_argument</span>(<span class="ident">arg</span>);
+                    <span class="ident">cmd</span>.<span class="ident">push_argument</span>(<span class="ident">arg</span>);
                 }
                 <span class="prelude-val">None</span> <span class="op">=&gt;</span> {
                     <span class="comment">// TODO: Signal an error to the callbacks</span>
@@ -709,6 +815,17 @@
             <span class="kw">match</span> <span class="ident">letter</span> {
                 <span class="string">&#39;G&#39;</span> <span class="op">|</span> <span class="string">&#39;g&#39;</span> <span class="op">|</span> <span class="string">&#39;M&#39;</span> <span class="op">|</span> <span class="string">&#39;m&#39;</span> <span class="op">|</span> <span class="string">&#39;T&#39;</span> <span class="op">|</span> <span class="string">&#39;t&#39;</span> <span class="op">|</span> <span class="string">&#39;O&#39;</span> <span class="op">|</span> <span class="string">&#39;o&#39;</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
                 <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>,
+            }
+        } <span class="kw">else</span> {
+            <span class="bool-val">false</span>
+        }
+    }
+
+    <span class="kw">fn</span> <span class="ident">next_starts_a_command</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">letter</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">next_letter</span>() {
+            <span class="kw">match</span> <span class="ident">letter</span>.<span class="ident">to_ascii_lowercase</span>() {
+                <span class="string">&#39;g&#39;</span> <span class="op">|</span> <span class="string">&#39;m&#39;</span> <span class="op">|</span> <span class="string">&#39;t&#39;</span> <span class="op">|</span> <span class="string">&#39;o&#39;</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>,
+                <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
             }
         } <span class="kw">else</span> {
             <span class="bool-val">false</span>
@@ -764,7 +881,7 @@
             }
 
             <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Token</span>::<span class="ident">Comment</span>(<span class="ident">body</span>) <span class="op">=</span> <span class="ident">tok</span> {
-                <span class="ident">comments</span>(<span class="ident">Comment</span> { <span class="ident">body</span>, <span class="ident">span</span> });
+                <span class="ident">comments</span>(<span class="ident">Comment</span>::<span class="ident">new</span>(<span class="ident">body</span>, <span class="ident">span</span>));
             } <span class="kw">else</span> {
                 <span class="macro">unreachable</span><span class="macro">!</span>(
                     <span class="string">&quot;We should only ever see a {} or comments. Found {:?}&quot;</span>,
@@ -785,6 +902,8 @@
     }
 }
 
+<span class="doccomment">/// Callback functions the `Parser` can use to notify the user of errors</span>
+<span class="doccomment">/// encountered while parsing.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Callbacks</span> {
     <span class="kw">fn</span> <span class="ident">unexpected_token</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
@@ -794,6 +913,24 @@
     ) {
     }
     <span class="kw">fn</span> <span class="ident">unexpected_eof</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">_expected</span>: <span class="kw-2">&amp;</span>[<span class="ident">TokenKind</span>]) {}
+    <span class="kw">fn</span> <span class="ident">mangled_input</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">span</span>: <span class="ident">Span</span>) {}
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span>: <span class="ident">Callbacks</span><span class="op">&gt;</span> <span class="ident">Callbacks</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">C</span> {
+    <span class="kw">fn</span> <span class="ident">unexpected_token</span>(
+        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
+        <span class="ident">found</span>: <span class="ident">TokenKind</span>,
+        <span class="ident">span</span>: <span class="ident">Span</span>,
+        <span class="ident">expected</span>: <span class="kw-2">&amp;</span>[<span class="ident">TokenKind</span>],
+    ) {
+        (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">unexpected_token</span>(<span class="ident">found</span>, <span class="ident">span</span>, <span class="ident">expected</span>);
+    }
+    <span class="kw">fn</span> <span class="ident">unexpected_eof</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">expected</span>: <span class="kw-2">&amp;</span>[<span class="ident">TokenKind</span>]) {
+        (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">unexpected_eof</span>(<span class="ident">expected</span>);
+    }
+    <span class="kw">fn</span> <span class="ident">mangled_input</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">span</span>: <span class="ident">Span</span>) {
+        (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">mangled_input</span>(<span class="ident">input</span>, <span class="ident">span</span>);
+    }
 }
 
 <span class="doccomment">/// A no-op set of callbacks.</span>
@@ -824,6 +961,9 @@
         <span class="kw">fn</span> <span class="ident">unexpected_eof</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">expected</span>: <span class="kw-2">&amp;</span>[<span class="ident">TokenKind</span>]) {
             <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Unexpected EOF. Expected {:?}&quot;</span>, <span class="ident">expected</span>);
         }
+        <span class="kw">fn</span> <span class="ident">mangled_input</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">span</span>: <span class="ident">Span</span>) {
+            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Mangled input at {:?}, {:?}&quot;</span>, <span class="ident">span</span>, <span class="ident">input</span>);
+        }
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -837,7 +977,7 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">block</span>.<span class="ident">comments</span>().<span class="ident">len</span>(), <span class="number">1</span>);
 
         <span class="kw">let</span> <span class="ident">comment</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">block</span>.<span class="ident">comments</span>()[<span class="number">0</span>];
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">comment</span>.<span class="ident">body</span>, <span class="string">&quot;; This is a comment&quot;</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">comment</span>.<span class="ident">body</span>(), <span class="string">&quot;; This is a comment&quot;</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="ident">comment</span>.<span class="ident">span</span>,
             <span class="ident">Span</span> {
@@ -930,7 +1070,43 @@
 
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">block</span>.<span class="ident">comments</span>().<span class="ident">len</span>(), <span class="number">1</span>);
         <span class="kw">let</span> <span class="ident">comment</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">block</span>.<span class="ident">comments</span>()[<span class="number">0</span>];
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">comment</span>.<span class="ident">body</span>, <span class="string">&quot;; Some comment&quot;</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">comment</span>.<span class="ident">body</span>(), <span class="string">&quot;; Some comment&quot;</span>);
+    }
+
+    <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
+    <span class="kw">struct</span> <span class="ident">GarbageCollector</span> {
+        <span class="ident">garbage</span>: <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">String</span>, <span class="ident">Span</span>)<span class="op">&gt;</span>,
+    }
+
+    <span class="kw">impl</span> <span class="ident">Callbacks</span> <span class="kw">for</span> <span class="ident">GarbageCollector</span> {
+        <span class="kw">fn</span> <span class="ident">mangled_input</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">span</span>: <span class="ident">Span</span>) {
+            <span class="self">self</span>.<span class="ident">garbage</span>.<span class="ident">push</span>((<span class="ident">input</span>.<span class="ident">to_string</span>(), <span class="ident">span</span>));
+        }
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">skip_erroneous_sections</span>() {
+        <span class="kw">let</span> <span class="ident">src</span> <span class="op">=</span> <span class="string">&quot;N42 G42 $Oops... G90 (retain comments) P5&quot;</span>;
+
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">gc</span> <span class="op">=</span> <span class="ident">GarbageCollector</span>::<span class="ident">default</span>();
+        <span class="kw">let</span> <span class="ident">got</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Parser</span>::<span class="ident">new_with_callbacks</span>(<span class="ident">src</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">gc</span>).<span class="ident">collect</span>();
+
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>.<span class="ident">len</span>(), <span class="number">1</span>);
+
+        <span class="kw">let</span> <span class="ident">first_block</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">got</span>[<span class="number">0</span>];
+        <span class="kw">let</span> <span class="ident">commands</span> <span class="op">=</span> <span class="ident">first_block</span>.<span class="ident">commands</span>();
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">commands</span>.<span class="ident">len</span>(), <span class="number">1</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">first_block</span>.<span class="ident">comments</span>().<span class="ident">len</span>(), <span class="number">1</span>);
+
+        <span class="kw">let</span> <span class="ident">g42</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">commands</span>[<span class="number">0</span>];
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">g42</span>.<span class="ident">major_number</span>(), <span class="number">42</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">g42</span>.<span class="ident">span</span>(), <span class="ident">Span</span>::<span class="ident">new</span>(<span class="number">4</span>, <span class="number">8</span>, <span class="number">0</span>));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">g42</span>.<span class="ident">args</span>().<span class="ident">is_empty</span>());
+
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">gc</span>.<span class="ident">garbage</span>.<span class="ident">len</span>(), <span class="number">1</span>);
+        <span class="kw">let</span> (<span class="ident">garbage</span>, <span class="ident">span</span>) <span class="op">=</span> <span class="ident">gc</span>.<span class="ident">garbage</span>[<span class="number">0</span>].<span class="ident">clone</span>();
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">garbage</span>, <span class="kw-2">&amp;</span><span class="ident">src</span>[<span class="number">8</span>..]);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">span</span>, <span class="ident">Span</span>::<span class="ident">new</span>(<span class="number">8</span>, <span class="ident">src</span>.<span class="ident">len</span>(), <span class="number">0</span>));
     }
 }
 </pre>
