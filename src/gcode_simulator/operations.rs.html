@@ -497,7 +497,7 @@
             <span class="ident">ConversionError</span>::<span class="ident">MissingArguments</span> { <span class="ident">expected</span> } <span class="op">=&gt;</span> {
                 <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;expected one of the following arguments: &quot;</span>)<span class="question-mark">?</span>;
                 <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">expected</span>[<span class="number">0</span>])<span class="question-mark">?</span>;
-                <span class="kw">for</span> <span class="ident">arg</span> <span class="kw">in</span> <span class="ident">expected</span>.<span class="ident">into_iter</span>().<span class="ident">skip</span>(<span class="number">1</span>) {
+                <span class="kw">for</span> <span class="ident">arg</span> <span class="kw">in</span> <span class="ident">expected</span>.<span class="ident">iter</span>().<span class="ident">skip</span>(<span class="number">1</span>) {
                     <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;, {}&quot;</span>, <span class="ident">arg</span>)<span class="question-mark">?</span>;
                 }
 
@@ -518,7 +518,7 @@
                     <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;one of &quot;</span>)<span class="question-mark">?</span>;
                 }
                 <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">expected</span>[<span class="number">0</span>])<span class="question-mark">?</span>;
-                <span class="kw">for</span> <span class="ident">arg</span> <span class="kw">in</span> <span class="ident">expected</span>.<span class="ident">into_iter</span>().<span class="ident">skip</span>(<span class="number">1</span>) {
+                <span class="kw">for</span> <span class="ident">arg</span> <span class="kw">in</span> <span class="ident">expected</span>.<span class="ident">iter</span>().<span class="ident">skip</span>(<span class="number">1</span>) {
                     <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;, {}&quot;</span>, <span class="ident">arg</span>)<span class="question-mark">?</span>;
                 }
 

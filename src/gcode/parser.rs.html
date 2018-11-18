@@ -541,18 +541,6 @@
 <span id="541">541</span>
 <span id="542">542</span>
 <span id="543">543</span>
-<span id="544">544</span>
-<span id="545">545</span>
-<span id="546">546</span>
-<span id="547">547</span>
-<span id="548">548</span>
-<span id="549">549</span>
-<span id="550">550</span>
-<span id="551">551</span>
-<span id="552">552</span>
-<span id="553">553</span>
-<span id="554">554</span>
-<span id="555">555</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">lexer</span>::{<span class="ident">Lexer</span>, <span class="ident">Token</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">types</span>::{
@@ -821,19 +809,8 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">next_starts_a_command</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">letter</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">next_letter</span>() {
-            <span class="kw">match</span> <span class="ident">letter</span>.<span class="ident">to_ascii_lowercase</span>() {
-                <span class="string">&#39;g&#39;</span> <span class="op">|</span> <span class="string">&#39;m&#39;</span> <span class="op">|</span> <span class="string">&#39;t&#39;</span> <span class="op">|</span> <span class="string">&#39;o&#39;</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>,
-                <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
-            }
-        } <span class="kw">else</span> {
-            <span class="bool-val">false</span>
-        }
-    }
-
     <span class="kw">fn</span> <span class="ident">next_letter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span> {
-        <span class="kw">for</span> (<span class="ident">tok</span>, <span class="kw">_</span>) <span class="kw">in</span> <span class="self">self</span>.<span class="ident">lexer</span>.<span class="ident">clone</span>() {
+        <span class="kw">for</span> (<span class="ident">tok</span>, <span class="kw">_</span>) <span class="kw">in</span> <span class="ident">Clone</span>::<span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">lexer</span>) {
             <span class="kw">match</span> <span class="ident">tok</span> {
                 <span class="ident">Token</span>::<span class="ident">Letter</span>(<span class="ident">l</span>) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">l</span>),
                 <span class="ident">Token</span>::<span class="ident">Comment</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="kw">continue</span>,
@@ -848,16 +825,15 @@
     <span class="kw">fn</span> <span class="ident">next_kind</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TokenKind</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">lookahead</span>(<span class="op">|</span><span class="ident">lexy</span><span class="op">|</span> {
             <span class="ident">lexy</span>.<span class="ident">map</span>(<span class="op">|</span>(<span class="ident">tok</span>, <span class="kw">_</span>)<span class="op">|</span> <span class="ident">tok</span>.<span class="ident">kind</span>())
-                .<span class="ident">filter</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">kind</span><span class="op">|</span> <span class="ident">kind</span> <span class="op">!=</span> <span class="ident">TokenKind</span>::<span class="ident">Comment</span>)
-                .<span class="ident">next</span>()
+                .<span class="ident">find</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">kind</span><span class="op">|</span> <span class="ident">kind</span> <span class="op">!=</span> <span class="ident">TokenKind</span>::<span class="ident">Comment</span>)
         })
     }
 
     <span class="kw">fn</span> <span class="ident">lookahead</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">peek</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="ident">T</span>
     <span class="kw">where</span>
-        <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="ident">Lexer</span>) <span class="op">-&gt;</span> <span class="ident">T</span>,
+        <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="ident">Lexer</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">T</span>,
     {
-        <span class="ident">peek</span>(<span class="self">self</span>.<span class="ident">lexer</span>.<span class="ident">clone</span>())
+        <span class="ident">peek</span>(<span class="self">self</span>.<span class="ident">lexer</span>)
     }
 
     <span class="doccomment">/// Look ahead at the next token, advancing and returning the token if it</span>
@@ -913,7 +889,7 @@
     ) {
     }
     <span class="kw">fn</span> <span class="ident">unexpected_eof</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">_expected</span>: <span class="kw-2">&amp;</span>[<span class="ident">TokenKind</span>]) {}
-    <span class="kw">fn</span> <span class="ident">mangled_input</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">span</span>: <span class="ident">Span</span>) {}
+    <span class="kw">fn</span> <span class="ident">mangled_input</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">_input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">_span</span>: <span class="ident">Span</span>) {}
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span>: <span class="ident">Callbacks</span><span class="op">&gt;</span> <span class="ident">Callbacks</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">C</span> {
