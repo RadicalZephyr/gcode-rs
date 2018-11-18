@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["And",""],["Or",""]],"trait":[["Predicate","A generic predicate."]]});
