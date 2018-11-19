@@ -432,6 +432,60 @@
 <span id="432">432</span>
 <span id="433">433</span>
 <span id="434">434</span>
+<span id="435">435</span>
+<span id="436">436</span>
+<span id="437">437</span>
+<span id="438">438</span>
+<span id="439">439</span>
+<span id="440">440</span>
+<span id="441">441</span>
+<span id="442">442</span>
+<span id="443">443</span>
+<span id="444">444</span>
+<span id="445">445</span>
+<span id="446">446</span>
+<span id="447">447</span>
+<span id="448">448</span>
+<span id="449">449</span>
+<span id="450">450</span>
+<span id="451">451</span>
+<span id="452">452</span>
+<span id="453">453</span>
+<span id="454">454</span>
+<span id="455">455</span>
+<span id="456">456</span>
+<span id="457">457</span>
+<span id="458">458</span>
+<span id="459">459</span>
+<span id="460">460</span>
+<span id="461">461</span>
+<span id="462">462</span>
+<span id="463">463</span>
+<span id="464">464</span>
+<span id="465">465</span>
+<span id="466">466</span>
+<span id="467">467</span>
+<span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
+<span id="473">473</span>
+<span id="474">474</span>
+<span id="475">475</span>
+<span id="476">476</span>
+<span id="477">477</span>
+<span id="478">478</span>
+<span id="479">479</span>
+<span id="480">480</span>
+<span id="481">481</span>
+<span id="482">482</span>
+<span id="483">483</span>
+<span id="484">484</span>
+<span id="485">485</span>
+<span id="486">486</span>
+<span id="487">487</span>
+<span id="488">488</span>
 </pre><pre class="rust ">
 <span class="macro">cfg_if</span><span class="macro">!</span> {
     <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span> {
@@ -455,12 +509,16 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Span</span> {
+    <span class="doccomment">/// The byte index corresponding to the beginning of this `Span`.</span>
     <span class="kw">pub</span> <span class="ident">start</span>: <span class="ident">usize</span>,
+    <span class="doccomment">/// The byte index *one past* the end of the selection.</span>
     <span class="kw">pub</span> <span class="ident">end</span>: <span class="ident">usize</span>,
+    <span class="doccomment">/// Which line does this `Span` start on?</span>
     <span class="kw">pub</span> <span class="ident">source_line</span>: <span class="ident">usize</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">Span</span> {
+    <span class="doccomment">/// Create a new `Span`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">start</span>: <span class="ident">usize</span>, <span class="ident">end</span>: <span class="ident">usize</span>, <span class="ident">source_line</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Span</span> {
         <span class="ident">Span</span> {
             <span class="ident">start</span>,
@@ -469,6 +527,8 @@
         }
     }
 
+    <span class="doccomment">/// Get the placeholder `Span`, representing a location which hasn&#39;t been</span>
+    <span class="doccomment">/// resolved yet or doesn&#39;t correspond to a location (e.g. generated code).</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">placeholder</span>() <span class="op">-&gt;</span> <span class="ident">Span</span> {
         <span class="ident">Span</span> {
             <span class="ident">start</span>: <span class="ident">usize</span>::<span class="ident">max_value</span>(),
@@ -477,10 +537,12 @@
         }
     }
 
+    <span class="doccomment">/// Is this the placeholder `Span`?</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_placeholder</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="kw-2">*</span><span class="self">self</span> <span class="op">==</span> <span class="ident">Span</span>::<span class="ident">placeholder</span>()
     }
 
+    <span class="doccomment">/// Based on this `Span`, get the sub-string it corresponds to.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">text_from_source</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">src</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;input</span> <span class="ident">str</span>,
@@ -488,6 +550,7 @@
         <span class="ident">src</span>.<span class="ident">get</span>(<span class="self">self</span>.<span class="ident">start</span>..<span class="self">self</span>.<span class="ident">end</span>)
     }
 
+    <span class="doccomment">/// Merge this `Span` with another one.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">merge</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="ident">Span</span>) <span class="op">-&gt;</span> <span class="ident">Span</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_placeholder</span>() {
             <span class="ident">other</span>
@@ -511,6 +574,7 @@
 
 <span class="doccomment">/// The various token types that make up a gcode program.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Hash</span>)]</span>
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_docs</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">TokenKind</span> {
     <span class="ident">Letter</span>,
     <span class="ident">Number</span>,
@@ -564,55 +628,67 @@
         }
     }
 
+    <span class="doccomment">/// Is this block empty?</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_empty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">commands</span>.<span class="ident">is_empty</span>()
             <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">comments</span>.<span class="ident">is_empty</span>()
             <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">line_number</span>.<span class="ident">is_none</span>()
     }
 
+    <span class="doccomment">/// Convert this `Block` into a stream of `Gcode` commands.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_commands</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">Gcode</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">commands</span>.<span class="ident">into_iter</span>()
     }
 
+    <span class="doccomment">/// The `Gcode`s in this block.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">commands</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">Gcode</span>] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">commands</span>
     }
 
+    <span class="doccomment">/// Get a mutable reference to the `Gcode`s in this block.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">commands_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">Gcode</span>] {
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">commands</span>
     }
 
+    <span class="doccomment">/// The comments in this block.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">comments</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">Comment</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span>] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">comments</span>
     }
 
+    <span class="doccomment">/// The block&#39;s location.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">span</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Span</span> {
         <span class="self">self</span>.<span class="ident">span</span>
     }
 
+    <span class="doccomment">/// The block&#39;s line number (e.g. `N42`), if provided.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">line_number</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">line_number</span>
     }
 
+    <span class="doccomment">/// Set the `Block`&#39;s line number.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_line_number</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">number</span>: <span class="ident">usize</span>, <span class="ident">span</span>: <span class="ident">Span</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">merge_span</span>(<span class="ident">span</span>);
         <span class="self">self</span>.<span class="ident">line_number</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">number</span>);
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Does this block start with a *block delete*?</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">deleted</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">deleted</span>
     }
 
+    <span class="doccomment">/// Set the *block delete* flag.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">delete</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">delete</span>: <span class="ident">bool</span>) {
         <span class="self">self</span>.<span class="ident">deleted</span> <span class="op">=</span> <span class="ident">delete</span>;
     }
 
+    <span class="doccomment">/// Add a `Comment` to the `Block`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">push_comment</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">comment</span>: <span class="ident">Comment</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span>) {
         <span class="self">self</span>.<span class="ident">merge_span</span>(<span class="ident">comment</span>.<span class="ident">span</span>);
         <span class="self">self</span>.<span class="ident">comments</span>.<span class="ident">push</span>(<span class="ident">comment</span>);
     }
 
+    <span class="doccomment">/// Add a `Gcode` to the `Block`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">push_command</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">command</span>: <span class="ident">Gcode</span>) {
         <span class="self">self</span>.<span class="ident">merge_span</span>(<span class="ident">command</span>.<span class="ident">span</span>);
         <span class="self">self</span>.<span class="ident">commands</span>.<span class="ident">push</span>(<span class="ident">command</span>);
@@ -642,21 +718,28 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Gcode</span> {
+    <span class="doccomment">/// Create a new `Gcode`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Panics</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// A negative `number` is invalid.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">mnemonic</span>: <span class="ident">Mnemonic</span>, <span class="ident">number</span>: <span class="ident">f32</span>) <span class="op">-&gt;</span> <span class="ident">Gcode</span> {
         <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">number</span> <span class="op">&gt;=</span> <span class="number">0.0</span>, <span class="string">&quot;The number should always be positive&quot;</span>);
         <span class="ident">Gcode</span> {
             <span class="ident">mnemonic</span>,
-            <span class="ident">number</span>: <span class="ident">number</span> <span class="kw">as</span> <span class="ident">f32</span>,
+            <span class="ident">number</span>,
             <span class="ident">line_number</span>: <span class="prelude-val">None</span>,
             <span class="ident">arguments</span>: <span class="ident">Default</span>::<span class="ident">default</span>(),
             <span class="ident">span</span>: <span class="ident">Default</span>::<span class="ident">default</span>(),
         }
     }
 
+    <span class="doccomment">/// The general command category.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mnemonic</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Mnemonic</span> {
         <span class="self">self</span>.<span class="ident">mnemonic</span>
     }
 
+    <span class="doccomment">/// Get the command&#39;s major number.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">major_number</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
         <span class="macro">debug_assert</span><span class="macro">!</span>(
             <span class="self">self</span>.<span class="ident">number</span> <span class="op">&gt;=</span> <span class="number">0.0</span>,
@@ -665,6 +748,7 @@
         <span class="self">self</span>.<span class="ident">number</span>.<span class="ident">trunc</span>() <span class="kw">as</span> <span class="ident">usize</span>
     }
 
+    <span class="doccomment">/// Get the command&#39;s minor number, of there is one.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">minor_number</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="macro">debug_assert</span><span class="macro">!</span>(
             <span class="self">self</span>.<span class="ident">number</span> <span class="op">&gt;=</span> <span class="number">0.0</span>,
@@ -679,19 +763,23 @@
         }
     }
 
+    <span class="doccomment">/// Access any arguments attached to this `Gcode`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">args</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">Argument</span>] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">arguments</span>
     }
 
+    <span class="doccomment">/// Mutably access the arguments attached to this `Gcode`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">args_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">Argument</span>] {
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">arguments</span>
     }
 
+    <span class="doccomment">/// Set the line number.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_line_number</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">number</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">line_number</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">number</span>);
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Set the minor number.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_minor_number</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">number</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">number</span> <span class="op">&lt;</span> <span class="number">10</span>);
         <span class="self">self</span>.<span class="ident">number</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">number</span>.<span class="ident">trunc</span>() <span class="op">+</span> <span class="ident">number</span> <span class="kw">as</span> <span class="ident">f32</span> <span class="op">/</span> <span class="number">10.0</span>;
@@ -707,11 +795,13 @@
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Set the `Gcode`&#39;s `Span`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_span</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">span</span>: <span class="ident">Span</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">span</span> <span class="op">=</span> <span class="ident">span</span>;
         <span class="self">self</span>
     }
 
+    <span class="doccomment">/// Add an argument to the `Gcode`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">push_argument</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">arg</span>: <span class="ident">Argument</span>) {
         <span class="kw">if</span> <span class="op">!</span><span class="ident">arg</span>.<span class="ident">span</span>.<span class="ident">is_placeholder</span>() {
             <span class="self">self</span>.<span class="ident">span</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">span</span>.<span class="ident">merge</span>(<span class="ident">arg</span>.<span class="ident">span</span>);
@@ -731,14 +821,17 @@
         }
     }
 
+    <span class="doccomment">/// Get the `Gcode`&#39;s location.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">span</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Span</span> {
         <span class="self">self</span>.<span class="ident">span</span>
     }
 
+    <span class="doccomment">/// Get the `Gcode`&#39;s line number, if one was provided.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">line_number</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">line_number</span>
     }
 
+    <span class="doccomment">/// Get the value for a particular argument letter, if there is one.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">value_for</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">letter</span>: <span class="ident">char</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f32</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">letter</span> <span class="op">=</span> <span class="ident">letter</span>.<span class="ident">to_ascii_lowercase</span>();
 
@@ -749,16 +842,20 @@
     }
 }
 
-<span class="doccomment">/// A command argument.</span>
+<span class="doccomment">/// A command argument, the `X50.0` in `G01 X50.0`.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Argument</span> {
+    <span class="doccomment">/// The `X` in `X50.0`.</span>
     <span class="kw">pub</span> <span class="ident">letter</span>: <span class="ident">char</span>,
+    <span class="doccomment">/// The `50.0` in `X50.0`.</span>
     <span class="kw">pub</span> <span class="ident">value</span>: <span class="ident">f32</span>,
+    <span class="doccomment">/// Where the `Argument` lies in the source text.</span>
     <span class="kw">pub</span> <span class="ident">span</span>: <span class="ident">Span</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">Argument</span> {
+    <span class="doccomment">/// Create a new `Argument`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">letter</span>: <span class="ident">char</span>, <span class="ident">value</span>: <span class="ident">f32</span>, <span class="ident">span</span>: <span class="ident">Span</span>) <span class="op">-&gt;</span> <span class="ident">Argument</span> {
         <span class="ident">Argument</span> {
             <span class="ident">letter</span>,
@@ -781,20 +878,24 @@
     <span class="ident">body</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span>, <span class="ident">str</span><span class="op">&gt;</span>,
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>))]</span>
     <span class="ident">body</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;input</span> <span class="ident">str</span>,
+    <span class="doccomment">/// Where the `Comment` is placed within the source text.</span>
     <span class="kw">pub</span> <span class="ident">span</span>: <span class="ident">Span</span>,
 }
 
 <span class="macro">cfg_if</span><span class="macro">!</span> {
     <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span> {
         <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span> <span class="ident">Comment</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span> {
+            <span class="doccomment">/// Create a new `Comment`.</span>
             <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">body</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;input</span> <span class="ident">str</span>, <span class="ident">span</span>: <span class="ident">Span</span>) <span class="op">-&gt;</span> <span class="ident">Comment</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span> {
                 <span class="ident">Comment</span>::<span class="ident">new_cow</span>(<span class="ident">body</span>, <span class="ident">span</span>)
             }
 
+            <span class="doccomment">/// Get the `Comment`&#39;s content.</span>
             <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">body</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
                 <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="self">self</span>.<span class="ident">body</span>
             }
 
+            <span class="doccomment">/// Create a new `Comment`.</span>
             <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_cow</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span>, <span class="ident">str</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>(
                 <span class="ident">body</span>: <span class="ident">S</span>,
                 <span class="ident">span</span>: <span class="ident">Span</span>,
@@ -807,10 +908,12 @@
         }
     } <span class="kw">else</span> {
         <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span> <span class="ident">Comment</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span> {
+            <span class="doccomment">/// Create a new `Comment`.</span>
             <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">body</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;input</span> <span class="ident">str</span>, <span class="ident">span</span>: <span class="ident">Span</span>) <span class="op">-&gt;</span> <span class="ident">Comment</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span> {
                 <span class="ident">Comment</span> { <span class="ident">body</span>, <span class="ident">span</span> }
             }
 
+            <span class="doccomment">/// Get the `Comment`&#39;s content.</span>
             <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">body</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
                 <span class="self">self</span>.<span class="ident">body</span>
             }
@@ -822,9 +925,14 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Hash</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Mnemonic</span> {
+    <span class="doccomment">/// A *general* G-code, typically things like move commands or used to</span>
+    <span class="doccomment">/// change the machine&#39;s state.</span>
     <span class="ident">General</span>,
+    <span class="doccomment">/// A miscellaneous command.</span>
     <span class="ident">Miscellaneous</span>,
+    <span class="doccomment">/// The program number.</span>
     <span class="ident">ProgramNumber</span>,
+    <span class="doccomment">/// A tool change.</span>
     <span class="ident">ToolChange</span>,
 }
 

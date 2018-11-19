@@ -186,6 +186,13 @@
 <span id="186">186</span>
 <span id="187">187</span>
 <span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">types</span>::{<span class="ident">Argument</span>, <span class="ident">Gcode</span>, <span class="ident">Mnemonic</span>};
 
@@ -237,6 +244,7 @@
 <span class="doccomment">/// assert!(x.evaluate(&amp;g00));</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Predicate</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Evaluate the predicate based on the provided input.</span>
     <span class="kw">fn</span> <span class="ident">evaluate</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">item</span>: <span class="kw-2">&amp;</span><span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
 
     <span class="doccomment">/// Create a new [`Predicate&lt;T&gt;`] which is effectively</span>
@@ -266,6 +274,9 @@
     }
 }
 
+<span class="doccomment">/// See [`Predicate::and()`] for more.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [`Predicate::and()`]: ./trait.Predicate.html#method.and</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">And</span><span class="op">&lt;</span><span class="ident">L</span>, <span class="ident">R</span><span class="op">&gt;</span> {
     <span class="ident">left</span>: <span class="ident">L</span>,
@@ -283,6 +294,9 @@
     }
 }
 
+<span class="doccomment">/// See [`Predicate::or()`] for more.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [`Predicate::or()`]: ./trait.Predicate.html#method.or</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Or</span><span class="op">&lt;</span><span class="ident">L</span>, <span class="ident">R</span><span class="op">&gt;</span> {
     <span class="ident">left</span>: <span class="ident">L</span>,
