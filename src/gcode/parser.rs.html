@@ -549,12 +549,14 @@
 <span id="549">549</span>
 <span id="550">550</span>
 <span id="551">551</span>
+<span id="552">552</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">lexer</span>::{<span class="ident">Lexer</span>, <span class="ident">Token</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">types</span>::{
     <span class="ident">Argument</span>, <span class="ident">Block</span>, <span class="ident">Comment</span>, <span class="ident">Gcode</span>, <span class="ident">Mnemonic</span>, <span class="ident">Span</span>, <span class="ident">TokenKind</span>,
 };
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>))]</span>
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_imports</span>)]</span>
 <span class="kw">use</span> <span class="ident">libm</span>::<span class="ident">F32Ext</span>;
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
