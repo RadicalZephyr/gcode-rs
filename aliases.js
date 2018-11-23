@@ -5,4 +5,7 @@ ALIASES['gcode'] = {};
 ALIASES['gcode_simulator'] = {};
 ALIASES['libm'] = {};
 ALIASES['nodrop'] = {};
+ALIASES['num_traits'] = {};
 ALIASES['sum_type'] = {};
+ALIASES['typenum'] = {};
+ALIASES['uom'] = {};

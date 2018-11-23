@@ -116,32 +116,50 @@
 <span id="116">116</span>
 <span id="117">117</span>
 <span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">ConversionError</span>, <span class="ident">FromGcode</span>, <span class="ident">Operation</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">operations</span>::<span class="ident">helpers</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">TryFrom</span>;
 <span class="kw">use</span> <span class="ident">gcode</span>::<span class="ident">Gcode</span>;
 <span class="kw">use</span> <span class="ident">state</span>::<span class="ident">State</span>;
+<span class="kw">use</span> <span class="ident">uom</span>::<span class="ident">si</span>::<span class="ident">f32</span>::<span class="ident">Time</span>;
+<span class="kw">use</span> <span class="ident">uom</span>::<span class="ident">si</span>::<span class="ident">time</span>::{<span class="ident">millisecond</span>, <span class="ident">second</span>};
 
+<span class="doccomment">/// Wait for a period of time.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Dwell</span> {
-    <span class="doccomment">/// The number of seconds to wait for.</span>
-    <span class="kw">pub</span> <span class="ident">duration</span>: <span class="ident">f32</span>,
-}
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Dwell</span>(<span class="kw">pub</span> <span class="ident">Time</span>);
 
 <span class="kw">impl</span> <span class="ident">Dwell</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">duration</span>: <span class="ident">f32</span>) <span class="op">-&gt;</span> <span class="ident">Dwell</span> {
-        <span class="ident">Dwell</span> { <span class="ident">duration</span> }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">duration</span>: <span class="ident">Time</span>) <span class="op">-&gt;</span> <span class="ident">Dwell</span> {
+        <span class="ident">Dwell</span>(<span class="ident">duration</span>)
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_seconds</span>(<span class="ident">duration</span>: <span class="ident">f32</span>) <span class="op">-&gt;</span> <span class="ident">Dwell</span> {
+        <span class="ident">Dwell</span>::<span class="ident">new</span>(<span class="ident">Time</span>::<span class="ident">new</span>::<span class="op">&lt;</span><span class="ident">second</span><span class="op">&gt;</span>(<span class="ident">duration</span>))
+    }
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_milliseconds</span>(<span class="ident">duration</span>: <span class="ident">f32</span>) <span class="op">-&gt;</span> <span class="ident">Dwell</span> {
+        <span class="ident">Dwell</span>::<span class="ident">new</span>(<span class="ident">Time</span>::<span class="ident">new</span>::<span class="op">&lt;</span><span class="ident">millisecond</span><span class="op">&gt;</span>(<span class="ident">duration</span>))
     }
 }
 
 <span class="kw">impl</span> <span class="ident">Operation</span> <span class="kw">for</span> <span class="ident">Dwell</span> {
-    <span class="kw">fn</span> <span class="ident">state_after</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">seconds</span>: <span class="ident">f32</span>, <span class="ident">initial_state</span>: <span class="ident">State</span>) <span class="op">-&gt;</span> <span class="ident">State</span> {
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">seconds</span> <span class="op">&lt;=</span> <span class="self">self</span>.<span class="ident">duration</span>);
+    <span class="kw">fn</span> <span class="ident">state_after</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">seconds</span>: <span class="ident">Time</span>, <span class="ident">initial_state</span>: <span class="ident">State</span>) <span class="op">-&gt;</span> <span class="ident">State</span> {
+        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">seconds</span> <span class="op">&lt;=</span> <span class="self">self</span>.<span class="number">0</span>);
         <span class="ident">initial_state</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">duration</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">_initial_state</span>: <span class="kw-2">&amp;</span><span class="ident">State</span>) <span class="op">-&gt;</span> <span class="ident">f32</span> {
-        <span class="self">self</span>.<span class="ident">duration</span>
+    <span class="kw">fn</span> <span class="ident">duration</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">_initial_state</span>: <span class="kw-2">&amp;</span><span class="ident">State</span>) <span class="op">-&gt;</span> <span class="ident">Time</span> {
+        <span class="self">self</span>.<span class="number">0</span>
     }
 }
 
@@ -150,38 +168,38 @@
 
     <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">other</span>: <span class="ident">Gcode</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">const</span> <span class="ident">VALIDATION_MSG</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;Dwell times must be positive&quot;</span>;
-        <span class="kw">let</span> <span class="ident">valid_numbers</span> <span class="op">=</span> <span class="ident">Dwell</span>::<span class="ident">valid_major_numbers</span>();
+        <span class="ident">helpers</span>::<span class="ident">check_major_number</span>::<span class="op">&lt;</span><span class="ident">Dwell</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>)<span class="question-mark">?</span>;
 
-        <span class="kw">if</span> <span class="op">!</span><span class="ident">valid_numbers</span>.<span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">major_number</span>()) {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ConversionError</span>::<span class="ident">IncorrectMajorNumber</span> {
-                <span class="ident">found</span>: <span class="ident">other</span>.<span class="ident">major_number</span>(),
-                <span class="ident">expected</span>: <span class="ident">valid_numbers</span>,
-            });
+        <span class="kw">fn</span> <span class="ident">try_convert</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>(
+            <span class="ident">letter</span>: <span class="ident">char</span>,
+            <span class="ident">gcode</span>: <span class="kw-2">&amp;</span><span class="ident">Gcode</span>,
+        ) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Dwell</span>, <span class="ident">ConversionError</span><span class="op">&gt;&gt;</span>
+        <span class="kw">where</span>
+            <span class="ident">U</span>: <span class="ident">uom</span>::<span class="ident">si</span>::<span class="ident">time</span>::<span class="ident">Unit</span> <span class="op">+</span> <span class="ident">uom</span>::<span class="ident">Conversion</span><span class="op">&lt;</span><span class="ident">f32</span>, <span class="ident">T</span> <span class="op">=</span> <span class="ident">f32</span><span class="op">&gt;</span>,
+        {
+            <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">gcode</span>.<span class="ident">value_for</span>(<span class="ident">letter</span>)<span class="question-mark">?</span>;
+
+            <span class="kw">if</span> <span class="ident">value</span> <span class="op">&gt;=</span> <span class="number">0.0</span> {
+                <span class="kw">let</span> <span class="ident">t</span> <span class="op">=</span> <span class="ident">Time</span>::<span class="ident">new</span>::<span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>(<span class="ident">value</span>);
+                <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="ident">Dwell</span>::<span class="ident">new</span>(<span class="ident">t</span>)))
+            } <span class="kw">else</span> {
+                <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">ConversionError</span>::<span class="ident">InvalidArgument</span> {
+                    <span class="ident">letter</span>,
+                    <span class="ident">value</span>,
+                    <span class="ident">message</span>: <span class="ident">VALIDATION_MSG</span>,
+                }))
+            }
         }
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">h</span>) <span class="op">=</span> <span class="ident">other</span>.<span class="ident">value_for</span>(<span class="string">&#39;H&#39;</span>) {
-            <span class="kw">if</span> <span class="ident">h</span> <span class="op">&gt;=</span> <span class="number">0.0</span> {
-                <span class="prelude-val">Ok</span>(<span class="ident">Dwell</span>::<span class="ident">new</span>(<span class="ident">h</span> <span class="op">/</span> <span class="number">1000.0</span>))
-            } <span class="kw">else</span> {
-                <span class="prelude-val">Err</span>(<span class="ident">ConversionError</span>::<span class="ident">InvalidArgument</span> {
-                    <span class="ident">letter</span>: <span class="string">&#39;H&#39;</span>,
-                    <span class="ident">value</span>: <span class="ident">h</span>,
-                    <span class="ident">message</span>: <span class="ident">VALIDATION_MSG</span>,
-                })
-            }
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">p</span>) <span class="op">=</span> <span class="ident">other</span>.<span class="ident">value_for</span>(<span class="string">&#39;P&#39;</span>) {
-            <span class="kw">if</span> <span class="ident">p</span> <span class="op">&gt;=</span> <span class="number">0.0</span> {
-                <span class="prelude-val">Ok</span>(<span class="ident">Dwell</span>::<span class="ident">new</span>(<span class="ident">p</span>))
-            } <span class="kw">else</span> {
-                <span class="prelude-val">Err</span>(<span class="ident">ConversionError</span>::<span class="ident">InvalidArgument</span> {
-                    <span class="ident">letter</span>: <span class="string">&#39;P&#39;</span>,
-                    <span class="ident">value</span>: <span class="ident">p</span>,
-                    <span class="ident">message</span>: <span class="ident">VALIDATION_MSG</span>,
-                })
-            }
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">h</span>) <span class="op">=</span> <span class="ident">try_convert</span>::<span class="op">&lt;</span><span class="ident">millisecond</span><span class="op">&gt;</span>(<span class="string">&#39;H&#39;</span>, <span class="kw-2">&amp;</span><span class="ident">other</span>) {
+            <span class="kw">return</span> <span class="ident">h</span>;
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">p</span>) <span class="op">=</span> <span class="ident">try_convert</span>::<span class="op">&lt;</span><span class="ident">millisecond</span><span class="op">&gt;</span>(<span class="string">&#39;P&#39;</span>, <span class="kw-2">&amp;</span><span class="ident">other</span>) {
+            <span class="kw">return</span> <span class="ident">p</span>;
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">s</span>) <span class="op">=</span> <span class="ident">try_convert</span>::<span class="op">&lt;</span><span class="ident">second</span><span class="op">&gt;</span>(<span class="string">&#39;S&#39;</span>, <span class="kw-2">&amp;</span><span class="ident">other</span>) {
+            <span class="kw">return</span> <span class="ident">s</span>;
         } <span class="kw">else</span> {
             <span class="prelude-val">Err</span>(<span class="ident">ConversionError</span>::<span class="ident">MissingArguments</span> {
-                <span class="ident">expected</span>: <span class="kw-2">&amp;</span>[<span class="string">&#39;H&#39;</span>, <span class="string">&#39;P&#39;</span>],
+                <span class="ident">expected</span>: <span class="kw-2">&amp;</span>[<span class="string">&#39;H&#39;</span>, <span class="string">&#39;P&#39;</span>, <span class="string">&#39;S&#39;</span>],
             })
         }
     }
@@ -204,7 +222,7 @@
             (
                 <span class="string">&quot;G4&quot;</span>,
                 <span class="prelude-val">Err</span>(<span class="ident">ConversionError</span>::<span class="ident">MissingArguments</span> {
-                    <span class="ident">expected</span>: <span class="kw-2">&amp;</span>[<span class="string">&#39;H&#39;</span>, <span class="string">&#39;P&#39;</span>],
+                    <span class="ident">expected</span>: <span class="kw-2">&amp;</span>[<span class="string">&#39;H&#39;</span>, <span class="string">&#39;P&#39;</span>, <span class="string">&#39;S&#39;</span>],
                 }),
             ),
             (
@@ -214,8 +232,9 @@
                     <span class="ident">expected</span>: <span class="kw-2">&amp;</span>[<span class="number">4</span>],
                 }),
             ),
-            (<span class="string">&quot;G4 H5&quot;</span>, <span class="prelude-val">Ok</span>(<span class="ident">Dwell</span>::<span class="ident">new</span>(<span class="number">5e-3</span>))),
-            (<span class="string">&quot;G4 P5&quot;</span>, <span class="prelude-val">Ok</span>(<span class="ident">Dwell</span>::<span class="ident">new</span>(<span class="number">5.0</span>))),
+            (<span class="string">&quot;G4 H5&quot;</span>, <span class="prelude-val">Ok</span>(<span class="ident">Dwell</span>::<span class="ident">from_milliseconds</span>(<span class="number">5.0</span>))),
+            (<span class="string">&quot;G4 P5&quot;</span>, <span class="prelude-val">Ok</span>(<span class="ident">Dwell</span>::<span class="ident">from_milliseconds</span>(<span class="number">5.0</span>))),
+            (<span class="string">&quot;G4 S5&quot;</span>, <span class="prelude-val">Ok</span>(<span class="ident">Dwell</span>::<span class="ident">from_seconds</span>(<span class="number">5.0</span>))),
             (
                 <span class="string">&quot;G4 P-50&quot;</span>,
                 <span class="prelude-val">Err</span>(<span class="ident">ConversionError</span>::<span class="ident">InvalidArgument</span> {
@@ -233,7 +252,6 @@
             <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">got</span>, <span class="ident">should_be</span>);
         }
     }
-
 }
 </pre>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><aside id="help" class="hidden"><div><h1 class="hidden">Help</h1><div class="shortcuts"><h2>Keyboard Shortcuts</h2><dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd><dt><kbd>S</kbd></dt><dd>Focus the search field</dd><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd><dt><kbd>↹</kbd></dt><dd>Switch tab</dd><dt><kbd>&#9166;</kbd></dt><dd>Go to active search result</dd><dt><kbd>+</kbd></dt><dd>Expand all sections</dd><dt><kbd>-</kbd></dt><dd>Collapse all sections</dd></dl></div><div class="infos"><h2>Search Tricks</h2><p>Prefix searches with a type followed by a colon (e.g. <code>fn:</code>) to restrict the search to a given type.</p><p>Accepted types are: <code>fn</code>, <code>mod</code>, <code>struct</code>, <code>enum</code>, <code>trait</code>, <code>type</code>, <code>macro</code>, and <code>const</code>.</p><p>Search functions by type signature (e.g. <code>vec -> usize</code> or <code>* -> vec</code>)</p><p>Search multiple things at once by splitting your query with comma (e.g. <code>str,u8</code> or <code>String,struct:Vec,test</code>)</p></div></div></aside><script>window.rootPath = "../../../";window.currentCrate = "gcode_simulator";</script><script src="../../../aliases.js"></script><script src="../../../main.js"></script><script defer src="../../../search-index.js"></script></body></html>
