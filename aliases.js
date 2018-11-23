@@ -5,3 +5,4 @@ ALIASES['gcode'] = {};
 ALIASES['gcode_simulator'] = {};
 ALIASES['libm'] = {};
 ALIASES['nodrop'] = {};
+ALIASES['sum_type'] = {};

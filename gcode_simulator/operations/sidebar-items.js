@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["ConversionError",""]],"struct":[["Dwell",""],["LinearInterpolate",""]],"trait":[["Operation",""]]});
+initSidebarItems({"enum":[["ConversionError",""],["Op","A union of all known operations."]],"struct":[["Dwell",""],["LinearInterpolate",""]],"trait":[["FromGcode","A helper trait for anything which a `Gcode` might be able to transform into."],["Operation",""]]});
