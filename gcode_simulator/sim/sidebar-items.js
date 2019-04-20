@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["simulate_motion",""]],"struct":[["OperationMap","A mapping from raw `Gcode`s to their corresponding operations."],["Simulation",""]]});
