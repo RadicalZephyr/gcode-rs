@@ -53,6 +53,10 @@
 <span id="53">53</span>
 <span id="54">54</span>
 <span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! A gcode parsing library designed for `no_std` environments.</span>
 <span class="doccomment">//!</span>
@@ -65,6 +69,10 @@
 <span class="doccomment">//!   or implementing traits from `std` (e.g. `std::error::Error`).</span>
 <span class="doccomment">//! - `transforms`: Exposes the transformations API for manipulating `Gcode`s</span>
 <span class="doccomment">//!   before executing or writing to a file.</span>
+<span class="doccomment">//! - `large-buffers` (on-by-default): Increases the number of commands,</span>
+<span class="doccomment">//!   comments and arguments which can be added to a block (see</span>
+<span class="doccomment">//!   [`Block::MAX_COMMENT_COUNT`], [`Block::MAX_COMMAND_COUNT`], and</span>
+<span class="doccomment">//!   [`Gcode::MAX_ARGUMENT_COUNT`] for more).</span>
 
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>), <span class="ident">no_std</span>)]</span>
 <span class="attribute">#![<span class="ident">deny</span>(

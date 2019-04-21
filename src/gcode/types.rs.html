@@ -486,12 +486,64 @@
 <span id="486">486</span>
 <span id="487">487</span>
 <span id="488">488</span>
+<span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
+<span id="495">495</span>
+<span id="496">496</span>
+<span id="497">497</span>
+<span id="498">498</span>
+<span id="499">499</span>
+<span id="500">500</span>
+<span id="501">501</span>
+<span id="502">502</span>
+<span id="503">503</span>
+<span id="504">504</span>
+<span id="505">505</span>
+<span id="506">506</span>
+<span id="507">507</span>
+<span id="508">508</span>
+<span id="509">509</span>
+<span id="510">510</span>
+<span id="511">511</span>
+<span id="512">512</span>
+<span id="513">513</span>
+<span id="514">514</span>
+<span id="515">515</span>
+<span id="516">516</span>
+<span id="517">517</span>
+<span id="518">518</span>
+<span id="519">519</span>
+<span id="520">520</span>
+<span id="521">521</span>
+<span id="522">522</span>
+<span id="523">523</span>
+<span id="524">524</span>
+<span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
+<span id="529">529</span>
+<span id="530">530</span>
+<span id="531">531</span>
+<span id="532">532</span>
+<span id="533">533</span>
+<span id="534">534</span>
+<span id="535">535</span>
+<span id="536">536</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="macro">cfg_if</span><span class="macro">!</span> {
     <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span> {
         <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>;
         <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Display</span>, <span class="ident">Formatter</span>};
         <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
+
+        <span class="kw">type</span> <span class="ident">Comments</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Comment</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;&gt;</span>;
+        <span class="kw">type</span> <span class="ident">Arguments</span> <span class="op">=</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Argument</span><span class="op">&gt;</span>;
+        <span class="kw">type</span> <span class="ident">Commands</span> <span class="op">=</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Gcode</span><span class="op">&gt;</span>;
     } <span class="kw">else</span> {
         <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">cmp</span>;
         <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_imports</span>)]</span>
@@ -499,9 +551,9 @@
         <span class="kw">use</span> <span class="ident">arrayvec</span>::<span class="ident">ArrayVec</span>;
         <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Display</span>, <span class="ident">Formatter</span>};
 
-        <span class="kw">type</span> <span class="ident">Comments</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">ArrayVec</span><span class="op">&lt;</span>[<span class="ident">Comment</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span>; <span class="number">3</span>]<span class="op">&gt;</span>;
-        <span class="kw">type</span> <span class="ident">Arguments</span> <span class="op">=</span> <span class="ident">ArrayVec</span><span class="op">&lt;</span>[<span class="ident">Argument</span>; <span class="number">10</span>]<span class="op">&gt;</span>;
-        <span class="kw">type</span> <span class="ident">Commands</span> <span class="op">=</span> <span class="ident">ArrayVec</span><span class="op">&lt;</span>[<span class="ident">Gcode</span>; <span class="number">10</span>]<span class="op">&gt;</span>;
+        <span class="kw">type</span> <span class="ident">Comments</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">ArrayVec</span><span class="op">&lt;</span>[<span class="ident">Comment</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span>; <span class="ident">Block</span>::<span class="ident">MAX_COMMENT_COUNT</span>]<span class="op">&gt;</span>;
+        <span class="kw">type</span> <span class="ident">Arguments</span> <span class="op">=</span> <span class="ident">ArrayVec</span><span class="op">&lt;</span>[<span class="ident">Argument</span>; <span class="ident">Gcode</span>::<span class="ident">MAX_ARGUMENT_COUNT</span>]<span class="op">&gt;</span>;
+        <span class="kw">type</span> <span class="ident">Commands</span> <span class="op">=</span> <span class="ident">ArrayVec</span><span class="op">&lt;</span>[<span class="ident">Gcode</span>; <span class="ident">Block</span>::<span class="ident">MAX_COMMAND_COUNT</span>]<span class="op">&gt;</span>;
     }
 }
 
@@ -605,19 +657,46 @@
     <span class="ident">line_number</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>,
     <span class="ident">deleted</span>: <span class="ident">bool</span>,
     <span class="ident">span</span>: <span class="ident">Span</span>,
-
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>))]</span>
     <span class="ident">commands</span>: <span class="ident">Commands</span>,
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
-    <span class="ident">commands</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Gcode</span><span class="op">&gt;</span>,
-
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>))]</span>
     <span class="ident">comments</span>: <span class="ident">Comments</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span>,
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
-    <span class="ident">comments</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Comment</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;&gt;</span>,
+}
+
+<span class="macro">cfg_if</span><span class="macro">!</span> {
+    <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;large-buffers&quot;</span>)]</span> {
+        <span class="kw">const</span> <span class="ident">MAX_COMMAND_COUNT</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">16</span>;
+        <span class="kw">const</span> <span class="ident">MAX_COMMENT_COUNT</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">4</span>;
+    } <span class="kw">else</span> {
+        <span class="kw">const</span> <span class="ident">MAX_COMMAND_COUNT</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">1</span>;
+        <span class="kw">const</span> <span class="ident">MAX_COMMENT_COUNT</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">1</span>;
+    }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span> <span class="ident">Block</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// The maximum number of [`Gcode`] commands which can be in a [`Block`]</span>
+    <span class="doccomment">/// when compiled *without* the `std` feature.</span>
+    <span class="doccomment">///</span>
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(
+        <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;large-buffers&quot;</span>,
+        <span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Each [`Block`] can contain `16` [`Gcode`]s.&quot;</span>
+    )]</span>
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(
+        <span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;large-buffers&quot;</span>),
+        <span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Each [`Block`] can contain `1` [`Gcode`].&quot;</span>
+    )]</span>
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX_COMMAND_COUNT</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="ident">MAX_COMMAND_COUNT</span>;
+    <span class="doccomment">/// The maximum number of [`Comment`]s which can be in a [`Block`] when</span>
+    <span class="doccomment">/// compiled *without* the `std` feature.</span>
+    <span class="doccomment">///</span>
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(
+        <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;large-buffers&quot;</span>,
+        <span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Each [`Block`] can contain `4` [`Comment`]s.&quot;</span>
+    )]</span>
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(
+        <span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;large-buffers&quot;</span>),
+        <span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Each [`Block`] can contain `1` [`Comment`].&quot;</span>
+    )]</span>
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX_COMMENT_COUNT</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="ident">MAX_COMMENT_COUNT</span>;
+
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">empty</span>() <span class="op">-&gt;</span> <span class="ident">Block</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span> {
         <span class="ident">Block</span> {
             <span class="ident">commands</span>: <span class="ident">Default</span>::<span class="ident">default</span>(),
@@ -710,14 +789,31 @@
     <span class="ident">mnemonic</span>: <span class="ident">Mnemonic</span>,
     <span class="ident">number</span>: <span class="ident">f32</span>,
     <span class="ident">span</span>: <span class="ident">Span</span>,
-
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>))]</span>
     <span class="ident">arguments</span>: <span class="ident">Arguments</span>,
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
-    <span class="ident">arguments</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Argument</span><span class="op">&gt;</span>,
+}
+
+<span class="macro">cfg_if</span><span class="macro">!</span> {
+    <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;large-buffers&quot;</span>)]</span> {
+        <span class="kw">const</span> <span class="ident">MAX_ARGUMENT_COUNT</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">16</span>;
+    } <span class="kw">else</span> {
+        <span class="kw">const</span> <span class="ident">MAX_ARGUMENT_COUNT</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">5</span>;
+    }
 }
 
 <span class="kw">impl</span> <span class="ident">Gcode</span> {
+    <span class="doccomment">/// The maximum number of arguments in a single [`Gcode`] command when</span>
+    <span class="doccomment">/// compiled *without* the `std` feature.</span>
+    <span class="doccomment">///</span>
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(
+        <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;large-buffers&quot;</span>,
+        <span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Each [`Gcode`] can contain `16` [`Argument`]s.&quot;</span>
+    )]</span>
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(
+        <span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;large-buffers&quot;</span>),
+        <span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Each [`Gcode`] can contain `5` [`Argument`]s.&quot;</span>
+    )]</span>
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX_ARGUMENT_COUNT</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="ident">MAX_ARGUMENT_COUNT</span>;
+
     <span class="doccomment">/// Create a new `Gcode`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Panics</span>
