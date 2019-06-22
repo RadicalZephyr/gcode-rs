@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/uom-0.20.1/src/si/energy.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>energy.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../uom/index.html'><img src='../../../rust-logo.png' alt='logo' width='100'></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/uom-0.24.0/src/si/energy.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>energy.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../uom/index.html'><img src='../../../rust-logo.png' alt='logo' width='100'></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -115,13 +115,22 @@
 <span id="115">115</span>
 <span id="116">116</span>
 <span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="doccomment">//! Energy (base unit joule, m&lt;sup&gt;2&lt;/sup&gt; · kg · s&lt;sup&gt;-2&lt;/sup&gt;).</span>
+<span class="doccomment">//! Energy (base unit joule, kg · m² · s⁻²).</span>
 
 <span class="macro">quantity</span><span class="macro">!</span> {
-    <span class="doccomment">/// Energy (base unit joule, m&lt;sup&gt;2&lt;/sup&gt; · kg · s&lt;sup&gt;-2&lt;/sup&gt;).</span>
+    <span class="doccomment">/// Energy (base unit joule, kg · m² · s⁻²).</span>
     <span class="ident">quantity</span>: <span class="ident">Energy</span>; <span class="string">&quot;energy&quot;</span>;
-    <span class="doccomment">/// Energy dimension, m&lt;sup&gt;2&lt;/sup&gt; · kg · s&lt;sup&gt;-2&lt;/sup&gt;.</span>
+    <span class="doccomment">/// Dimension of energy, L²MT⁻² (base unit joule, kg · m² · s⁻²).</span>
     <span class="ident">dimension</span>: <span class="ident">ISQ</span><span class="op">&lt;</span>
         <span class="ident">P2</span>,     <span class="comment">// length</span>
         <span class="ident">P1</span>,     <span class="comment">// mass</span>
@@ -154,6 +163,17 @@
         @<span class="ident">zeptojoule</span>: <span class="macro">prefix</span><span class="macro">!</span>(<span class="ident">zepto</span>); <span class="string">&quot;zJ&quot;</span>, <span class="string">&quot;zeptojoule&quot;</span>, <span class="string">&quot;zeptojoules&quot;</span>;
         @<span class="ident">yoctojoule</span>: <span class="macro">prefix</span><span class="macro">!</span>(<span class="ident">yocto</span>); <span class="string">&quot;yJ&quot;</span>, <span class="string">&quot;yoctojoule&quot;</span>, <span class="string">&quot;yoctojoules&quot;</span>;
 
+        @<span class="ident">petawatt_hour</span>: <span class="number">3.6_E18</span>; <span class="string">&quot;PW · h&quot;</span>, <span class="string">&quot;petawatt hour&quot;</span>, <span class="string">&quot;petawatt hours&quot;</span>;
+        @<span class="ident">terawatt_hour</span>: <span class="number">3.6_E15</span>; <span class="string">&quot;TW · h&quot;</span>, <span class="string">&quot;terawatt hour&quot;</span>, <span class="string">&quot;terawatt hours&quot;</span>;
+        @<span class="ident">gigawatt_hour</span>: <span class="number">3.6_E12</span>; <span class="string">&quot;GW · h&quot;</span>, <span class="string">&quot;gigawatt hour&quot;</span>, <span class="string">&quot;gigawatt hours&quot;</span>;
+        @<span class="ident">megawatt_hour</span>: <span class="number">3.6_E9</span>; <span class="string">&quot;MW · h&quot;</span>, <span class="string">&quot;megawatt hour&quot;</span>, <span class="string">&quot;megawatt hours&quot;</span>;
+        @<span class="ident">kilowatt_hour</span>: <span class="number">3.6_E6</span>; <span class="string">&quot;kW · h&quot;</span>, <span class="string">&quot;kilowatt hour&quot;</span>, <span class="string">&quot;kilowatt hours&quot;</span>;
+        @<span class="ident">hectowatt_hour</span>: <span class="number">3.6_E5</span>; <span class="string">&quot;hW · h&quot;</span>, <span class="string">&quot;hectowatt hour&quot;</span>, <span class="string">&quot;hectowatt hours&quot;</span>;
+        @<span class="ident">decawatt_hour</span>: <span class="number">3.6_E4</span>; <span class="string">&quot;daW · h&quot;</span>, <span class="string">&quot;decawatt hour&quot;</span>, <span class="string">&quot;decawatt hours&quot;</span>;
+        @<span class="ident">watt_hour</span>: <span class="number">3.6_E3</span>; <span class="string">&quot;W · h&quot;</span>, <span class="string">&quot;watt hour&quot;</span>, <span class="string">&quot;watt hours&quot;</span>;
+        @<span class="ident">milliwatt_hour</span>: <span class="number">3.6_E0</span>; <span class="string">&quot;mW · h&quot;</span>, <span class="string">&quot;milliwatt hour&quot;</span>, <span class="string">&quot;milliwatt hours&quot;</span>;
+        @<span class="ident">microwatt_hour</span>: <span class="number">3.6_E-3</span>; <span class="string">&quot;µW · h&quot;</span>, <span class="string">&quot;microwatt hour&quot;</span>, <span class="string">&quot;microwatt hours&quot;</span>;
+
         @<span class="ident">btu_it</span>: <span class="number">1.055_056_E3</span>; <span class="string">&quot;Btu (IT)&quot;</span>, <span class="string">&quot;British thermal unit (IT)&quot;</span>,
             <span class="string">&quot;British thermal units (IT)&quot;</span>;
         @<span class="ident">btu</span>: <span class="number">1.054_350_E3</span>; <span class="string">&quot;Btu&quot;</span>, <span class="string">&quot;British thermal unit&quot;</span>, <span class="string">&quot;British thermal units&quot;</span>;
@@ -176,12 +196,10 @@
             <span class="string">&quot;foot pounds-force&quot;</span>; <span class="comment">// @foot_pound_force</span>
         @<span class="ident">kilocalorie_it</span>: <span class="number">4.186_8_E3</span>; <span class="string">&quot;kcal (IT)&quot;</span>, <span class="string">&quot;kilocalorie (IT)&quot;</span>, <span class="string">&quot;kilocalories (IT)&quot;</span>;
         @<span class="ident">kilocalorie</span>: <span class="number">4.184_E3</span>; <span class="string">&quot;kcal&quot;</span>, <span class="string">&quot;kilocalorie&quot;</span>, <span class="string">&quot;kilocalories&quot;</span>;
-        @<span class="ident">kilowatt_hour</span>: <span class="number">3.6_E6</span>; <span class="string">&quot;kW · h&quot;</span>, <span class="string">&quot;kilowatt hour&quot;</span>, <span class="string">&quot;kilowatt hours&quot;</span>;
         @<span class="ident">quad</span>: <span class="number">1.055_056_E18</span>; <span class="string">&quot;10¹⁵ Btu (IT)&quot;</span>, <span class="string">&quot;quad&quot;</span>, <span class="string">&quot;quads&quot;</span>;
         @<span class="ident">therm_ec</span>: <span class="number">1.055_06_E8</span>; <span class="string">&quot;thm (EC)&quot;</span>, <span class="string">&quot;therm (EC)&quot;</span>, <span class="string">&quot;therms (EC)&quot;</span>;
         @<span class="ident">therm_us</span>: <span class="number">1.054_804_E8</span>; <span class="string">&quot;thm&quot;</span>, <span class="string">&quot;therm&quot;</span>, <span class="string">&quot;therms&quot;</span>;
         @<span class="ident">ton_tnt</span>: <span class="number">4.184_E9</span>; <span class="string">&quot;t of TNT&quot;</span>, <span class="string">&quot;ton of TNT&quot;</span>, <span class="string">&quot;tons of TNT&quot;</span>;
-        @<span class="ident">watt_hour</span>: <span class="number">3.6_E3</span>; <span class="string">&quot;W · h&quot;</span>, <span class="string">&quot;watt hour&quot;</span>, <span class="string">&quot;watt hours&quot;</span>;
         @<span class="ident">watt_second</span>: <span class="number">1.0_E0</span>; <span class="string">&quot;W · s&quot;</span>, <span class="string">&quot;watt second&quot;</span>, <span class="string">&quot;watt seconds&quot;</span>;
     }
 }

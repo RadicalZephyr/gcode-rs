@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/uom-0.20.1/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../uom/index.html'><img src='../../rust-logo.png' alt='logo' width='100'></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/uom-0.24.0/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../uom/index.html'><img src='../../rust-logo.png' alt='logo' width='100'></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -569,6 +569,67 @@
 <span id="569">569</span>
 <span id="570">570</span>
 <span id="571">571</span>
+<span id="572">572</span>
+<span id="573">573</span>
+<span id="574">574</span>
+<span id="575">575</span>
+<span id="576">576</span>
+<span id="577">577</span>
+<span id="578">578</span>
+<span id="579">579</span>
+<span id="580">580</span>
+<span id="581">581</span>
+<span id="582">582</span>
+<span id="583">583</span>
+<span id="584">584</span>
+<span id="585">585</span>
+<span id="586">586</span>
+<span id="587">587</span>
+<span id="588">588</span>
+<span id="589">589</span>
+<span id="590">590</span>
+<span id="591">591</span>
+<span id="592">592</span>
+<span id="593">593</span>
+<span id="594">594</span>
+<span id="595">595</span>
+<span id="596">596</span>
+<span id="597">597</span>
+<span id="598">598</span>
+<span id="599">599</span>
+<span id="600">600</span>
+<span id="601">601</span>
+<span id="602">602</span>
+<span id="603">603</span>
+<span id="604">604</span>
+<span id="605">605</span>
+<span id="606">606</span>
+<span id="607">607</span>
+<span id="608">608</span>
+<span id="609">609</span>
+<span id="610">610</span>
+<span id="611">611</span>
+<span id="612">612</span>
+<span id="613">613</span>
+<span id="614">614</span>
+<span id="615">615</span>
+<span id="616">616</span>
+<span id="617">617</span>
+<span id="618">618</span>
+<span id="619">619</span>
+<span id="620">620</span>
+<span id="621">621</span>
+<span id="622">622</span>
+<span id="623">623</span>
+<span id="624">624</span>
+<span id="625">625</span>
+<span id="626">626</span>
+<span id="627">627</span>
+<span id="628">628</span>
+<span id="629">629</span>
+<span id="630">630</span>
+<span id="631">631</span>
+<span id="632">632</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Units of measurement is a crate that does automatic type-safe zero-cost</span>
 <span class="doccomment">//! [dimensional analysis][analysis]. You can create your own systems or use the pre-built</span>
@@ -586,11 +647,11 @@
 <span class="doccomment">//! [orbiter]: https://en.wikipedia.org/wiki/Mars_Climate_Orbiter</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ## Usage</span>
-<span class="doccomment">//! `uom` requires `rustc` 1.20.0 or later. Add this to your `Cargo.toml`:</span>
+<span class="doccomment">//! `uom` requires `rustc` 1.28.0 or later. Add this to your `Cargo.toml`:</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```toml</span>
 <span class="doccomment">//! [dependencies]</span>
-<span class="doccomment">//! uom = &quot;0.20.1&quot;</span>
+<span class="doccomment">//! uom = &quot;0.24.0&quot;</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! and this to your crate root:</span>
@@ -603,11 +664,7 @@
 <span class="doccomment">//! invalid operations:</span>
 <span class="doccomment">//!</span>
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;si&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;f32&quot;</span>), <span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot; ```rust&quot;</span>)]</span>
-<span class="comment">//#![cfg_attr(rustfmt, rustfmt_skip)]</span>
-<span class="attribute">#![<span class="ident">cfg_attr</span>(
-    <span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;si&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;f32&quot;</span>)),
-    <span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot; ```rust,ignore&quot;</span>
-)]</span>
+<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;si&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;f32&quot;</span>)), <span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot; ```rust,ignore&quot;</span>)]</span>
 <span class="doccomment">//! extern crate uom;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! use uom::si::f32::*;</span>
@@ -617,8 +674,13 @@
 <span class="doccomment">//! fn main() {</span>
 <span class="doccomment">//!     let length = Length::new::&lt;kilometer&gt;(5.0);</span>
 <span class="doccomment">//!     let time = Time::new::&lt;second&gt;(15.0);</span>
-<span class="doccomment">//!     let _velocity/*: Velocity*/ = length / time;</span>
+<span class="doccomment">//!     let velocity/*: Velocity*/ = length / time;</span>
+<span class="doccomment">//!     let _acceleration = calc_acceleration(velocity, time);</span>
 <span class="doccomment">//!     //let error = length + time; // error[E0308]: mismatched types</span>
+<span class="doccomment">//! }</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! fn calc_acceleration(velocity: Velocity, time: Time) -&gt; Acceleration {</span>
+<span class="doccomment">//!     velocity / time</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
@@ -637,12 +699,12 @@
 <span class="doccomment">//! ```toml</span>
 <span class="doccomment">//! [dependencies]</span>
 <span class="doccomment">//! uom = {</span>
-<span class="doccomment">//!     version = &quot;0.20.1&quot;,</span>
+<span class="doccomment">//!     version = &quot;0.24.0&quot;,</span>
 <span class="doccomment">//!     default-features = false,</span>
 <span class="doccomment">//!     features = [</span>
 <span class="doccomment">//!         &quot;autoconvert&quot;, # automatic base unit conversion.</span>
 <span class="doccomment">//!         &quot;usize&quot;, &quot;u8&quot;, &quot;u16&quot;, &quot;u32&quot;, &quot;u64&quot;, # Unsigned integer storage types.</span>
-<span class="doccomment">//!         &quot;isize&quot;, &quot;i8&quot;, &quot;i16&quot;, &quot;i32&quot;, &quot;i64&quot;, # Signed interger storage types.</span>
+<span class="doccomment">//!         &quot;isize&quot;, &quot;i8&quot;, &quot;i16&quot;, &quot;i32&quot;, &quot;i64&quot;, # Signed integer storage types.</span>
 <span class="doccomment">//!         &quot;bigint&quot;, &quot;biguint&quot;, # Arbitrary width integer storage types.</span>
 <span class="doccomment">//!         &quot;rational&quot;, &quot;rational32&quot;, &quot;rational64&quot;, &quot;bigrational&quot;, # Integer ratio storage types.</span>
 <span class="doccomment">//!         &quot;f32&quot;, &quot;f64&quot;, # Floating point storage types.</span>
@@ -675,9 +737,9 @@
 <span class="doccomment">//! Rather than working with [measurement units](http://jcgm.bipm.org/vim/en/1.9.html) (meter,</span>
 <span class="doccomment">//! kilometer, foot, mile, ...) `uom` works with [quantities](http://jcgm.bipm.org/vim/en/1.1.html)</span>
 <span class="doccomment">//! (length, mass, time, ...). This simplifies usage because units are only involved at interface</span>
-<span class="doccomment">//! boundaries: the rest of your code only needs to be concerned about the quantities involved. This</span>
-<span class="doccomment">//! also makes operations on quantities (+, -, \*, /, ...) have zero runtime cost&lt;sup&gt;1&lt;/sup&gt; over</span>
-<span class="doccomment">//! using the raw storage type (e.g. `f32`).</span>
+<span class="doccomment">//! boundaries: the rest of your code only needs to be concerned about the quantities involved.</span>
+<span class="doccomment">//! This also makes operations on quantities (+, -, \*, /, ...) have zero runtime cost over using</span>
+<span class="doccomment">//! the raw storage type (e.g. `f32`).</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! `uom` normalizes values to the [base unit](http://jcgm.bipm.org/vim/en/1.10.html) for the</span>
 <span class="doccomment">//! quantity. Alternative base units can be used by executing the macro defined for the system of</span>
@@ -692,8 +754,6 @@
 <span class="doccomment">//! centimeter` is normalized to `0.01 meter` which can&#39;t be stored in an `i32`. `uom` only allows</span>
 <span class="doccomment">//! units to be used safely. Users of this library will still need to be aware of implementation</span>
 <span class="doccomment">//! details of the underlying storage type including limits and precision.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!  1. Once codegen bug [#38269](https://github.com/rust-lang/rust/issues/38269) is resolved.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ## Contributing</span>
 <span class="doccomment">//! Contributions are welcome from everyone. Submit a pull request, an issue, or just add comments</span>
@@ -723,21 +783,29 @@
 <span class="comment">// Compile with `no_std` when the `std` feature is not specified.</span>
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>), <span class="ident">no_std</span>)]</span>
 <span class="comment">// Rustc lints.</span>
-<span class="comment">// #![warn(bare_trait_objects)] // Requires rustc 1.27.</span>
-<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_copy_implementations</span>)]</span>
-<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_debug_implementations</span>)]</span>
-<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_docs</span>)]</span>
-<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">trivial_casts</span>)]</span>
-<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">trivial_numeric_casts</span>)]</span>
-<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">unused_extern_crates</span>)]</span>
-<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">unused_import_braces</span>)]</span>
-<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">unused_qualifications</span>)]</span>
-<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">unused_results</span>)]</span>
+<span class="attribute">#![<span class="ident">forbid</span>(<span class="ident">unsafe_code</span>)]</span>
+<span class="attribute">#![<span class="ident">warn</span>(
+    <span class="comment">//bare_trait_objects, // Requires rustc 1.27.</span>
+    <span class="ident">missing_copy_implementations</span>,
+    <span class="ident">missing_debug_implementations</span>,
+    <span class="ident">missing_docs</span>,
+    <span class="ident">trivial_casts</span>,
+    <span class="ident">trivial_numeric_casts</span>,
+    <span class="ident">unused_extern_crates</span>,
+    <span class="ident">unused_import_braces</span>,
+    <span class="ident">unused_qualifications</span>,
+    <span class="ident">unused_results</span>
+)]</span>
 <span class="comment">// Clippy lints.</span>
-<span class="comment">//#![cfg_attr(rustfmt, rustfmt_skip)]</span>
 <span class="attribute">#![<span class="ident">cfg_attr</span>(
     <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;cargo-clippy&quot;</span>,
-    <span class="ident">allow</span>(<span class="ident">inline_always</span>, <span class="ident">excessive_precision</span>)
+    <span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">deprecated_cfg_attr</span>, <span class="ident">clippy</span>::<span class="ident">excessive_precision</span>, <span class="ident">clippy</span>::<span class="ident">inline_always</span>)
+)]</span>
+<span class="comment">// Lints allowed in tests because they are unavoidable in the generic code when a type may or may</span>
+<span class="comment">// not need to be dereferenced or cloned.</span>
+<span class="attribute">#![<span class="ident">cfg_attr</span>(
+    <span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;cargo-clippy&quot;</span>, <span class="ident">test</span>),
+    <span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">op_ref</span>, <span class="ident">clippy</span>::<span class="ident">clone_on_copy</span>, <span class="ident">clippy</span>::<span class="ident">float_cmp</span>)
 )]</span>
 
 <span class="comment">// Fail to compile if no underlying storage type features are specified.</span>
@@ -908,6 +976,32 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span>;
 
+<span class="doccomment">/// Operations performed on the constant portion of the [conversion factor][factor]. Used to help</span>
+<span class="doccomment">/// guide optimizations when floating point underlying storage types are used.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// For a value, `v: Float`, adding `-0.0` is a no-op while adding `0.0` will change the sign if</span>
+<span class="doccomment">/// `v` is `-0.0`. The opposite is true for subtraction.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```ignore</span>
+<span class="doccomment">///    v</span>
+<span class="doccomment">///  0.0 + -0.0 =  0.0</span>
+<span class="doccomment">/// -0.0 +  0.0 =  0.0 // v +  0.0 != v</span>
+<span class="doccomment">/// -0.0 + -0.0 = -0.0</span>
+<span class="doccomment">///  0.0 - -0.0 =  0.0</span>
+<span class="doccomment">/// -0.0 -  0.0 =  0.0</span>
+<span class="doccomment">/// -0.0 - -0.0 =  0.0 // v - -0.0 != v</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [factor]: https://jcgm.bipm.org/vim/en/1.24.html</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ConstantOp</span> {
+    <span class="doccomment">/// Hint that the constant is being added to a value.</span>
+    <span class="ident">Add</span>,
+
+    <span class="doccomment">/// Hint that the constant is being subtracted from a value.</span>
+    <span class="ident">Sub</span>,
+}
+
 <span class="doccomment">/// Trait to identify [units][units] which have a [conversion factor][factor].</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// [units]: http://jcgm.bipm.org/vim/en/1.13.html</span>
@@ -917,9 +1011,8 @@
     <span class="kw">type</span> <span class="ident">T</span>: <span class="ident">ConversionFactor</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Coefficient portion of [conversion factor][factor] for converting the given unit to the</span>
-    <span class="doccomment">/// base unit for the quantity: `(value * coefficient()) + constant()`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Default implementation returns `Self::T::one()`.</span>
+    <span class="doccomment">/// base unit for the quantity: `(value * coefficient()) + constant()`. Implementation should</span>
+    <span class="doccomment">/// return the multiplicative identity (`Self::T::one()`) if no coefficient exists.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [factor]: https://jcgm.bipm.org/vim/en/1.24.html</span>
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
@@ -928,13 +1021,15 @@
     }
 
     <span class="doccomment">/// Constant portion of [conversion factor][factor] for converting the given unit to the base</span>
-    <span class="doccomment">/// unit for the quantity: `(value * coefficient()) + constant()`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Default implementation returns `Self::T::zero()`.</span>
+    <span class="doccomment">/// unit for the quantity: `(value * coefficient()) + constant()`. Implementation should return</span>
+    <span class="doccomment">/// the additive identity (`Self::T::zero()`) if no constant exists. See</span>
+    <span class="doccomment">/// [ConstantOp](enum.ConstantOp.html) documentation for details about parameter use to use to</span>
+    <span class="doccomment">/// ensure method optimizes correctly.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [factor]: https://jcgm.bipm.org/vim/en/1.24.html</span>
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">constant</span>() <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">T</span> {
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_variables</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">constant</span>(<span class="ident">op</span>: <span class="ident">ConstantOp</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">T</span> {
         <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">T</span> <span class="kw">as</span> <span class="ident">num</span>::<span class="ident">Zero</span><span class="op">&gt;</span>::<span class="ident">zero</span>()
     }
 
@@ -955,13 +1050,13 @@
 <span class="doccomment">/// Trait representing a [conversion factor][factor].</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// [factor]: https://jcgm.bipm.org/vim/en/1.24.html</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">rustfmt</span>, <span class="ident">rustfmt_skip</span>)]</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ConversionFactor</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>
-    : <span class="ident">lib</span>::<span class="ident">ops</span>::<span class="ident">Add</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span><span class="op">&gt;</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ConversionFactor</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>:
+    <span class="ident">lib</span>::<span class="ident">ops</span>::<span class="ident">Add</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span><span class="op">&gt;</span>
     <span class="op">+</span> <span class="ident">lib</span>::<span class="ident">ops</span>::<span class="ident">Sub</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span><span class="op">&gt;</span>
     <span class="op">+</span> <span class="ident">lib</span>::<span class="ident">ops</span>::<span class="ident">Mul</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span><span class="op">&gt;</span>
     <span class="op">+</span> <span class="ident">lib</span>::<span class="ident">ops</span>::<span class="ident">Div</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span><span class="op">&gt;</span>
-    <span class="op">+</span> <span class="ident">num</span>::<span class="ident">Zero</span> <span class="op">+</span> <span class="ident">num</span>::<span class="ident">One</span>
+    <span class="op">+</span> <span class="ident">num</span>::<span class="ident">Zero</span>
+    <span class="op">+</span> <span class="ident">num</span>::<span class="ident">One</span>
 {
     <span class="doccomment">/// Raises a `ConversionFactor&lt;V&gt;` to an integer power.</span>
     <span class="kw">fn</span> <span class="ident">powi</span>(<span class="self">self</span>, <span class="ident">e</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
@@ -974,14 +1069,19 @@
 <span class="doccomment">/// remainder, negation, and saturating addition/subtraction.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// [kind]: https://jcgm.bipm.org/vim/en/1.2.html</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">rustfmt</span>, <span class="ident">rustfmt_skip</span>)]</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Kind</span>
-    : <span class="ident">marker</span>::<span class="ident">Add</span> <span class="op">+</span> <span class="ident">marker</span>::<span class="ident">AddAssign</span>
-    <span class="op">+</span> <span class="ident">marker</span>::<span class="ident">Sub</span> <span class="op">+</span> <span class="ident">marker</span>::<span class="ident">SubAssign</span>
-    <span class="op">+</span> <span class="ident">marker</span>::<span class="ident">Mul</span> <span class="op">+</span> <span class="ident">marker</span>::<span class="ident">MulAssign</span>
-    <span class="op">+</span> <span class="ident">marker</span>::<span class="ident">Div</span> <span class="op">+</span> <span class="ident">marker</span>::<span class="ident">DivAssign</span>
-    <span class="op">+</span> <span class="ident">marker</span>::<span class="ident">Rem</span> <span class="op">+</span> <span class="ident">marker</span>::<span class="ident">RemAssign</span>
-    <span class="op">+</span> <span class="ident">marker</span>::<span class="ident">Neg</span> <span class="op">+</span> <span class="ident">marker</span>::<span class="ident">Saturating</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Kind</span>:
+    <span class="ident">marker</span>::<span class="ident">Add</span>
+    <span class="op">+</span> <span class="ident">marker</span>::<span class="ident">AddAssign</span>
+    <span class="op">+</span> <span class="ident">marker</span>::<span class="ident">Sub</span>
+    <span class="op">+</span> <span class="ident">marker</span>::<span class="ident">SubAssign</span>
+    <span class="op">+</span> <span class="ident">marker</span>::<span class="ident">Mul</span>
+    <span class="op">+</span> <span class="ident">marker</span>::<span class="ident">MulAssign</span>
+    <span class="op">+</span> <span class="ident">marker</span>::<span class="ident">Div</span>
+    <span class="op">+</span> <span class="ident">marker</span>::<span class="ident">DivAssign</span>
+    <span class="op">+</span> <span class="ident">marker</span>::<span class="ident">Rem</span>
+    <span class="op">+</span> <span class="ident">marker</span>::<span class="ident">RemAssign</span>
+    <span class="op">+</span> <span class="ident">marker</span>::<span class="ident">Neg</span>
+    <span class="op">+</span> <span class="ident">marker</span>::<span class="ident">Saturating</span>
 {
 }
 
@@ -990,6 +1090,14 @@
 
     <span class="kw">impl</span> ::<span class="ident">Conversion</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">V</span> {
         <span class="kw">type</span> <span class="ident">T</span> <span class="op">=</span> <span class="ident">V</span>;
+
+        <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
+        <span class="kw">fn</span> <span class="ident">constant</span>(<span class="ident">op</span>: ::<span class="ident">ConstantOp</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">T</span> {
+            <span class="kw">match</span> <span class="ident">op</span> {
+                ::<span class="ident">ConstantOp</span>::<span class="ident">Add</span> <span class="op">=&gt;</span> <span class="op">-</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">T</span> <span class="kw">as</span> ::<span class="ident">num</span>::<span class="ident">Zero</span><span class="op">&gt;</span>::<span class="ident">zero</span>(),
+                ::<span class="ident">ConstantOp</span>::<span class="ident">Sub</span> <span class="op">=&gt;</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">T</span> <span class="kw">as</span> ::<span class="ident">num</span>::<span class="ident">Zero</span><span class="op">&gt;</span>::<span class="ident">zero</span>(),
+            }
+        }
 
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
         <span class="kw">fn</span> <span class="ident">into_conversion</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">T</span> {
@@ -1115,6 +1223,20 @@
         <span class="kw">fn</span> <span class="ident">value</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">V</span> {
             <span class="self">self</span>
         }
+    }
+}
+
+<span class="doccomment">/// Utilities for formatting and printing quantities.</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">fmt</span> {
+    <span class="doccomment">/// An enum to specify the display style to use.</span>
+    <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">DisplayStyle</span> {
+        <span class="doccomment">/// Display the value and a unit abbreviation, e.g. &quot;1.0 m&quot;, &quot;327 s&quot;.</span>
+        <span class="ident">Abbreviation</span>,
+
+        <span class="doccomment">/// Display the value and full unit name (pluralized as appropriate),</span>
+        <span class="doccomment">/// e.g. &quot;1 kilogram&quot;, &quot;756 feet&quot;.</span>
+        <span class="ident">Description</span>,
     }
 }
 
