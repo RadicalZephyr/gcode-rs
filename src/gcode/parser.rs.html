@@ -518,48 +518,9 @@
 <span id="518">518</span>
 <span id="519">519</span>
 <span id="520">520</span>
-<span id="521">521</span>
-<span id="522">522</span>
-<span id="523">523</span>
-<span id="524">524</span>
-<span id="525">525</span>
-<span id="526">526</span>
-<span id="527">527</span>
-<span id="528">528</span>
-<span id="529">529</span>
-<span id="530">530</span>
-<span id="531">531</span>
-<span id="532">532</span>
-<span id="533">533</span>
-<span id="534">534</span>
-<span id="535">535</span>
-<span id="536">536</span>
-<span id="537">537</span>
-<span id="538">538</span>
-<span id="539">539</span>
-<span id="540">540</span>
-<span id="541">541</span>
-<span id="542">542</span>
-<span id="543">543</span>
-<span id="544">544</span>
-<span id="545">545</span>
-<span id="546">546</span>
-<span id="547">547</span>
-<span id="548">548</span>
-<span id="549">549</span>
-<span id="550">550</span>
-<span id="551">551</span>
-<span id="552">552</span>
-<span id="553">553</span>
-<span id="554">554</span>
-<span id="555">555</span>
-<span id="556">556</span>
-<span id="557">557</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">lexer</span>::{<span class="ident">Lexer</span>, <span class="ident">Token</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">types</span>::{
-    <span class="ident">Argument</span>, <span class="ident">Block</span>, <span class="ident">Comment</span>, <span class="ident">Gcode</span>, <span class="ident">Mnemonic</span>, <span class="ident">Span</span>, <span class="ident">TokenKind</span>,
-};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">types</span>::{<span class="ident">Argument</span>, <span class="ident">Block</span>, <span class="ident">Comment</span>, <span class="ident">Gcode</span>, <span class="ident">Mnemonic</span>, <span class="ident">Span</span>, <span class="ident">TokenKind</span>};
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>))]</span>
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_imports</span>)]</span>
 <span class="kw">use</span> <span class="ident">libm</span>::<span class="ident">F32Ext</span>;
@@ -619,10 +580,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span>, <span class="ident">C</span>: <span class="ident">Callbacks</span><span class="op">&gt;</span> <span class="ident">Parser</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span>, <span class="ident">C</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Create a new `Parser` with a custom `Callback`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_with_callbacks</span>(
-        <span class="ident">src</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;input</span> <span class="ident">str</span>,
-        <span class="ident">callbacks</span>: <span class="ident">C</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">Parser</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span>, <span class="ident">C</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_with_callbacks</span>(<span class="ident">src</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;input</span> <span class="ident">str</span>, <span class="ident">callbacks</span>: <span class="ident">C</span>) <span class="op">-&gt;</span> <span class="ident">Parser</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span>, <span class="ident">C</span><span class="op">&gt;</span> {
         <span class="ident">Parser</span> {
             <span class="ident">lexer</span>: <span class="ident">Lexer</span>::<span class="ident">new</span>(<span class="ident">src</span>),
             <span class="ident">src</span>,
@@ -652,9 +610,7 @@
     <span class="kw">fn</span> <span class="ident">parse_preamble</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">block</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Block</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span>) {
         <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">kind</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">next_kind</span>() {
             <span class="kw">match</span> <span class="ident">kind</span> {
-                <span class="ident">TokenKind</span>::<span class="ident">Comment</span> <span class="op">=&gt;</span> {
-                    <span class="macro">unreachable</span><span class="macro">!</span>(<span class="string">&quot;next_kind() never yields a comment&quot;</span>)
-                }
+                <span class="ident">TokenKind</span>::<span class="ident">Comment</span> <span class="op">=&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(<span class="string">&quot;next_kind() never yields a comment&quot;</span>),
                 <span class="ident">TokenKind</span>::<span class="ident">ForwardSlash</span> <span class="op">=&gt;</span> {
                     <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="self">self</span>
                         .<span class="ident">chomp</span>(<span class="ident">kind</span>, <span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">block</span>.<span class="ident">push_comment</span>(<span class="ident">c</span>))
@@ -663,9 +619,7 @@
                 }
                 <span class="ident">TokenKind</span>::<span class="ident">Newline</span> <span class="op">=&gt;</span> {
                     <span class="kw">if</span> <span class="ident">block</span>.<span class="ident">is_empty</span>() {
-                        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">chomp</span>(<span class="ident">TokenKind</span>::<span class="ident">Newline</span>, <span class="op">|</span><span class="ident">c</span><span class="op">|</span> {
-                            <span class="ident">block</span>.<span class="ident">push_comment</span>(<span class="ident">c</span>)
-                        });
+                        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">chomp</span>(<span class="ident">TokenKind</span>::<span class="ident">Newline</span>, <span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">block</span>.<span class="ident">push_comment</span>(<span class="ident">c</span>));
                         <span class="kw">continue</span>;
                     } <span class="kw">else</span> {
                         <span class="kw">return</span>;
@@ -712,12 +666,8 @@
         })
     }
 
-    <span class="kw">fn</span> <span class="ident">parse_word</span>(
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
-        <span class="kw-2">mut</span> <span class="ident">comments</span>: <span class="kw">impl</span> <span class="ident">FnMut</span>(<span class="ident">Comment</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span>),
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Argument</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> (<span class="ident">tok</span>, <span class="ident">letter_span</span>) <span class="op">=</span>
-            <span class="self">self</span>.<span class="ident">chomp</span>(<span class="ident">TokenKind</span>::<span class="ident">Letter</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">comments</span>)<span class="question-mark">?</span>;
+    <span class="kw">fn</span> <span class="ident">parse_word</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">comments</span>: <span class="kw">impl</span> <span class="ident">FnMut</span>(<span class="ident">Comment</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span>)) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Argument</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> (<span class="ident">tok</span>, <span class="ident">letter_span</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">chomp</span>(<span class="ident">TokenKind</span>::<span class="ident">Letter</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">comments</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">letter</span> <span class="op">=</span> <span class="ident">tok</span>.<span class="ident">unwrap_letter</span>();
 
         <span class="kw">let</span> (<span class="ident">tok</span>, <span class="ident">span</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">chomp</span>(<span class="ident">TokenKind</span>::<span class="ident">Number</span>, <span class="ident">comments</span>)<span class="question-mark">?</span>;
@@ -743,19 +693,14 @@
                     }
                     <span class="ident">block</span>.<span class="ident">push_command</span>(<span class="ident">cmd</span>);
                 }
-                <span class="prelude-val">None</span> <span class="op">=&gt;</span> {
-                    <span class="self">self</span>.<span class="ident">fast_forward_to_safe_point</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">block</span>.<span class="ident">push_comment</span>(<span class="ident">c</span>))
-                }
+                <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">fast_forward_to_safe_point</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">block</span>.<span class="ident">push_comment</span>(<span class="ident">c</span>)),
             }
         }
     }
 
     <span class="doccomment">/// Something went wrong while trying to read a gcode command. Fast forward</span>
     <span class="doccomment">/// until we see the start of a new command or the end of the block.</span>
-    <span class="kw">fn</span> <span class="ident">fast_forward_to_safe_point</span>(
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
-        <span class="kw-2">mut</span> <span class="ident">comments</span>: <span class="kw">impl</span> <span class="ident">FnMut</span>(<span class="ident">Comment</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span>),
-    ) {
+    <span class="kw">fn</span> <span class="ident">fast_forward_to_safe_point</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">comments</span>: <span class="kw">impl</span> <span class="ident">FnMut</span>(<span class="ident">Comment</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span>)) {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">overall_span</span> <span class="op">=</span> <span class="ident">Span</span>::<span class="ident">placeholder</span>();
 
         <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">kind</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">next_kind</span>() {
@@ -782,10 +727,7 @@
         );
     }
 
-    <span class="kw">fn</span> <span class="ident">parse_command</span>(
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
-        <span class="kw-2">mut</span> <span class="ident">comments</span>: <span class="kw">impl</span> <span class="ident">FnMut</span>(<span class="ident">Comment</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span>),
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Gcode</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">parse_command</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">comments</span>: <span class="kw">impl</span> <span class="ident">FnMut</span>(<span class="ident">Comment</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span>)) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Gcode</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">Argument</span> {
             <span class="ident">letter</span>,
             <span class="ident">span</span>,
@@ -904,13 +846,7 @@
 <span class="doccomment">/// encountered while parsing.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Callbacks</span> {
     <span class="doccomment">/// We were looking for one or more tokens, but got a different</span>
-    <span class="kw">fn</span> <span class="ident">unexpected_token</span>(
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
-        <span class="ident">_found</span>: <span class="ident">TokenKind</span>,
-        <span class="ident">_span</span>: <span class="ident">Span</span>,
-        <span class="ident">_expected</span>: <span class="kw-2">&amp;</span>[<span class="ident">TokenKind</span>],
-    ) {
-    }
+    <span class="kw">fn</span> <span class="ident">unexpected_token</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">_found</span>: <span class="ident">TokenKind</span>, <span class="ident">_span</span>: <span class="ident">Span</span>, <span class="ident">_expected</span>: <span class="kw-2">&amp;</span>[<span class="ident">TokenKind</span>]) {}
     <span class="doccomment">/// The end-of-input was encountered when more input was expected.</span>
     <span class="kw">fn</span> <span class="ident">unexpected_eof</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">_expected</span>: <span class="kw-2">&amp;</span>[<span class="ident">TokenKind</span>]) {}
     <span class="doccomment">/// Invalid tokens</span>
@@ -918,12 +854,7 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span>: <span class="ident">Callbacks</span><span class="op">&gt;</span> <span class="ident">Callbacks</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">C</span> {
-    <span class="kw">fn</span> <span class="ident">unexpected_token</span>(
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
-        <span class="ident">found</span>: <span class="ident">TokenKind</span>,
-        <span class="ident">span</span>: <span class="ident">Span</span>,
-        <span class="ident">expected</span>: <span class="kw-2">&amp;</span>[<span class="ident">TokenKind</span>],
-    ) {
+    <span class="kw">fn</span> <span class="ident">unexpected_token</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">found</span>: <span class="ident">TokenKind</span>, <span class="ident">span</span>: <span class="ident">Span</span>, <span class="ident">expected</span>: <span class="kw-2">&amp;</span>[<span class="ident">TokenKind</span>]) {
         (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">unexpected_token</span>(<span class="ident">found</span>, <span class="ident">span</span>, <span class="ident">expected</span>);
     }
     <span class="kw">fn</span> <span class="ident">unexpected_eof</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">expected</span>: <span class="kw-2">&amp;</span>[<span class="ident">TokenKind</span>]) {
@@ -948,12 +879,7 @@
     <span class="kw">struct</span> <span class="ident">Fail</span>;
 
     <span class="kw">impl</span> <span class="ident">Callbacks</span> <span class="kw">for</span> <span class="ident">Fail</span> {
-        <span class="kw">fn</span> <span class="ident">unexpected_token</span>(
-            <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
-            <span class="ident">found</span>: <span class="ident">TokenKind</span>,
-            <span class="ident">span</span>: <span class="ident">Span</span>,
-            <span class="ident">expected</span>: <span class="kw-2">&amp;</span>[<span class="ident">TokenKind</span>],
-        ) {
+        <span class="kw">fn</span> <span class="ident">unexpected_token</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">found</span>: <span class="ident">TokenKind</span>, <span class="ident">span</span>: <span class="ident">Span</span>, <span class="ident">expected</span>: <span class="kw-2">&amp;</span>[<span class="ident">TokenKind</span>]) {
             <span class="macro">panic</span><span class="macro">!</span>(
                 <span class="string">&quot;Unexpected token, \&quot;{}\&quot; at {:?}. Expected {:?}&quot;</span>,
                 <span class="ident">found</span>, <span class="ident">span</span>, <span class="ident">expected</span>

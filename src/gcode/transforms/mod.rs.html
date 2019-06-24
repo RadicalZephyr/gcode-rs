@@ -209,15 +209,6 @@
 <span id="209">209</span>
 <span id="210">210</span>
 <span id="211">211</span>
-<span id="212">212</span>
-<span id="213">213</span>
-<span id="214">214</span>
-<span id="215">215</span>
-<span id="216">216</span>
-<span id="217">217</span>
-<span id="218">218</span>
-<span id="219">219</span>
-<span id="220">220</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Functionality for transforming gcodes.</span>
 
@@ -297,12 +288,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert_eq!(got, x_values_should_be);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">map_argument</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">A</span>, <span class="ident">F</span><span class="op">&gt;</span>(
-        <span class="self">self</span>,
-        <span class="ident">which_gcode</span>: <span class="ident">S</span>,
-        <span class="ident">which_arg</span>: <span class="ident">A</span>,
-        <span class="ident">map</span>: <span class="ident">F</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">MapArg</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">S</span>, <span class="ident">A</span>, <span class="ident">F</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">map_argument</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">A</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">which_gcode</span>: <span class="ident">S</span>, <span class="ident">which_arg</span>: <span class="ident">A</span>, <span class="ident">map</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="ident">MapArg</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">S</span>, <span class="ident">A</span>, <span class="ident">F</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="self">Self</span>: <span class="ident">Sized</span>,
         <span class="ident">S</span>: <span class="ident">Predicate</span><span class="op">&lt;</span><span class="ident">Gcode</span><span class="op">&gt;</span>,
@@ -420,11 +406,7 @@
                 }),
             <span class="ident">Gcode</span>::<span class="ident">new</span>(<span class="ident">Mnemonic</span>::<span class="ident">General</span>, <span class="number">1.0</span>)
                 .<span class="ident">with_span</span>(<span class="ident">Span</span>::<span class="ident">new</span>(<span class="number">14</span>, <span class="number">30</span>, <span class="number">0</span>))
-                .<span class="ident">with_argument</span>(<span class="ident">Argument</span>::<span class="ident">new</span>(
-                    <span class="string">&#39;X&#39;</span>,
-                    <span class="op">-</span><span class="number">2.5</span> <span class="op">+</span> <span class="ident">delta</span>,
-                    <span class="ident">Span</span>::<span class="ident">new</span>(<span class="number">18</span>, <span class="number">24</span>, <span class="number">0</span>),
-                ))
+                .<span class="ident">with_argument</span>(<span class="ident">Argument</span>::<span class="ident">new</span>(<span class="string">&#39;X&#39;</span>, <span class="op">-</span><span class="number">2.5</span> <span class="op">+</span> <span class="ident">delta</span>, <span class="ident">Span</span>::<span class="ident">new</span>(<span class="number">18</span>, <span class="number">24</span>, <span class="number">0</span>)))
                 .<span class="ident">with_argument</span>(<span class="ident">Argument</span>::<span class="ident">new</span>(<span class="string">&#39;Y&#39;</span>, <span class="number">3.14</span>, <span class="ident">Span</span>::<span class="ident">new</span>(<span class="number">24</span>, <span class="number">30</span>, <span class="number">0</span>))),
             <span class="comment">// Add a gcode with an X argument we want to ignore</span>
             <span class="ident">Gcode</span>::<span class="ident">new</span>(<span class="ident">Mnemonic</span>::<span class="ident">General</span>, <span class="number">4.0</span>)

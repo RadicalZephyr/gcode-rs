@@ -521,21 +521,8 @@
 <span id="521">521</span>
 <span id="522">522</span>
 <span id="523">523</span>
-<span id="524">524</span>
-<span id="525">525</span>
-<span id="526">526</span>
-<span id="527">527</span>
-<span id="528">528</span>
-<span id="529">529</span>
-<span id="530">530</span>
-<span id="531">531</span>
-<span id="532">532</span>
-<span id="533">533</span>
-<span id="534">534</span>
-<span id="535">535</span>
-<span id="536">536</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="macro">cfg_if</span><span class="macro">!</span> {
+<span class="ident">cfg_if</span>::<span class="macro">cfg_if</span><span class="macro">!</span> {
     <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span> {
         <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>;
         <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Display</span>, <span class="ident">Formatter</span>};
@@ -595,10 +582,7 @@
     }
 
     <span class="doccomment">/// Based on this `Span`, get the sub-string it corresponds to.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">text_from_source</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span>(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">src</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;input</span> <span class="ident">str</span>,
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;input</span> <span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">text_from_source</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">src</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;input</span> <span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;input</span> <span class="ident">str</span><span class="op">&gt;</span> {
         <span class="ident">src</span>.<span class="ident">get</span>(<span class="self">self</span>.<span class="ident">start</span>..<span class="self">self</span>.<span class="ident">end</span>)
     }
 
@@ -661,7 +645,7 @@
     <span class="ident">comments</span>: <span class="ident">Comments</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span>,
 }
 
-<span class="macro">cfg_if</span><span class="macro">!</span> {
+<span class="ident">cfg_if</span>::<span class="macro">cfg_if</span><span class="macro">!</span> {
     <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;large-buffers&quot;</span>)]</span> {
         <span class="kw">const</span> <span class="ident">MAX_COMMAND_COUNT</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">16</span>;
         <span class="kw">const</span> <span class="ident">MAX_COMMENT_COUNT</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">4</span>;
@@ -709,9 +693,7 @@
 
     <span class="doccomment">/// Is this block empty?</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_empty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">commands</span>.<span class="ident">is_empty</span>()
-            <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">comments</span>.<span class="ident">is_empty</span>()
-            <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">line_number</span>.<span class="ident">is_none</span>()
+        <span class="self">self</span>.<span class="ident">commands</span>.<span class="ident">is_empty</span>() <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">comments</span>.<span class="ident">is_empty</span>() <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">line_number</span>.<span class="ident">is_none</span>()
     }
 
     <span class="doccomment">/// Convert this `Block` into a stream of `Gcode` commands.</span>
@@ -792,7 +774,7 @@
     <span class="ident">arguments</span>: <span class="ident">Arguments</span>,
 }
 
-<span class="macro">cfg_if</span><span class="macro">!</span> {
+<span class="ident">cfg_if</span>::<span class="macro">cfg_if</span><span class="macro">!</span> {
     <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;large-buffers&quot;</span>)]</span> {
         <span class="kw">const</span> <span class="ident">MAX_ARGUMENT_COUNT</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">16</span>;
     } <span class="kw">else</span> {
@@ -837,19 +819,13 @@
 
     <span class="doccomment">/// Get the command&#39;s major number.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">major_number</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
-        <span class="macro">debug_assert</span><span class="macro">!</span>(
-            <span class="self">self</span>.<span class="ident">number</span> <span class="op">&gt;=</span> <span class="number">0.0</span>,
-            <span class="string">&quot;The number should always be positive&quot;</span>
-        );
+        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">number</span> <span class="op">&gt;=</span> <span class="number">0.0</span>, <span class="string">&quot;The number should always be positive&quot;</span>);
         <span class="self">self</span>.<span class="ident">number</span>.<span class="ident">trunc</span>() <span class="kw">as</span> <span class="ident">usize</span>
     }
 
     <span class="doccomment">/// Get the command&#39;s minor number, of there is one.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">minor_number</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
-        <span class="macro">debug_assert</span><span class="macro">!</span>(
-            <span class="self">self</span>.<span class="ident">number</span> <span class="op">&gt;=</span> <span class="number">0.0</span>,
-            <span class="string">&quot;The number should always be positive&quot;</span>
-        );
+        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">number</span> <span class="op">&gt;=</span> <span class="number">0.0</span>, <span class="string">&quot;The number should always be positive&quot;</span>);
         <span class="kw">let</span> <span class="ident">digit</span> <span class="op">=</span> (<span class="self">self</span>.<span class="ident">number</span>.<span class="ident">fract</span>() <span class="op">/</span> <span class="number">0.1</span>).<span class="ident">round</span>();
 
         <span class="kw">if</span> <span class="ident">digit</span> <span class="op">==</span> <span class="number">0.0</span> {
@@ -907,9 +883,7 @@
 
     <span class="doccomment">/// Remove the first argument with the specified `letter`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remove_argument</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">letter</span>: <span class="ident">char</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Argument</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">ix</span>) <span class="op">=</span>
-            <span class="self">self</span>.<span class="ident">arguments</span>.<span class="ident">iter</span>().<span class="ident">position</span>(<span class="op">|</span><span class="ident">arg</span><span class="op">|</span> <span class="ident">arg</span>.<span class="ident">letter</span> <span class="op">==</span> <span class="ident">letter</span>)
-        {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">ix</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">arguments</span>.<span class="ident">iter</span>().<span class="ident">position</span>(<span class="op">|</span><span class="ident">arg</span><span class="op">|</span> <span class="ident">arg</span>.<span class="ident">letter</span> <span class="op">==</span> <span class="ident">letter</span>) {
             <span class="kw">let</span> <span class="ident">removed</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">arguments</span>.<span class="ident">remove</span>(<span class="ident">ix</span>);
             <span class="prelude-val">Some</span>(<span class="ident">removed</span>)
         } <span class="kw">else</span> {
@@ -978,7 +952,7 @@
     <span class="kw">pub</span> <span class="ident">span</span>: <span class="ident">Span</span>,
 }
 
-<span class="macro">cfg_if</span><span class="macro">!</span> {
+<span class="ident">cfg_if</span>::<span class="macro">cfg_if</span><span class="macro">!</span> {
     <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span> {
         <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span> <span class="ident">Comment</span><span class="op">&lt;</span><span class="lifetime">&#39;input</span><span class="op">&gt;</span> {
             <span class="doccomment">/// Create a new `Comment`.</span>
