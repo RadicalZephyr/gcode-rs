@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["ParseResult","The outcome of parsing."]],"fn":[["parse_gcode","Parse the provided string to the end, triggering callbacks when gcodes and comments are encountered."]],"struct":[["VTable","A bunch of function pointers fired during the parsing process to notify the caller when \"something\" happens."]]});

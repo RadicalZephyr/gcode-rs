@@ -1,1 +1,0 @@
-initSidebarItems({"mod":[["operations","Translations from low level `Gcode`s to a more machine-friendly form."],["sim",""],["state","Machine state."]],"trait":[["TryFrom","A stand-in for the currently unstable `std::convert::TryFrom` trait."]]});
