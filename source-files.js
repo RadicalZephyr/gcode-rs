@@ -3,6 +3,7 @@ sourcesIndex["arrayvec"] = {"name":"","files":["array.rs","array_string.rs","cha
 sourcesIndex["cfg_if"] = {"name":"","files":["lib.rs"]};
 sourcesIndex["gcode"] = {"name":"","files":["comment.rs","gcode.rs","lexer.rs","lib.rs","lines.rs","span.rs","words.rs"]};
 sourcesIndex["gcode_ffi"] = {"name":"","files":["lib.rs"]};
+sourcesIndex["gcode_kinematics"] = {"name":"","files":["lib.rs"]};
 sourcesIndex["nodrop"] = {"name":"","files":["lib.rs"]};
 sourcesIndex["proc_macro2"] = {"name":"","files":["fallback.rs","lib.rs","strnom.rs","wrapper.rs"]};
 sourcesIndex["quote"] = {"name":"","files":["ext.rs","format.rs","ident_fragment.rs","lib.rs","runtime.rs","spanned.rs","to_tokens.rs"]};
