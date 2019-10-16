@@ -6,5 +6,4 @@ implementors["gcode"] = [{text:"impl&lt;'de: 'input, 'input&gt; <a class=\"trait
             } else {
                 window.pending_implementors = implementors;
             }
-        
-})()
+        })()

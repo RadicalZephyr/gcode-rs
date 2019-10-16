@@ -6,5 +6,4 @@ implementors["gcode"] = [];
             } else {
                 window.pending_implementors = implementors;
             }
-        
-})()
+        })()
