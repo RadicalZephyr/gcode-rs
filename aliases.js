@@ -4,6 +4,7 @@ ALIASES["cfg_if"] = {};
 ALIASES["gcode"] = {};
 ALIASES["gcode_ffi"] = {};
 ALIASES["gcode_kinematics"] = {};
+ALIASES["libm"] = {};
 ALIASES["nodrop"] = {};
 ALIASES["num_traits"] = {};
 ALIASES["proc_macro2"] = {};

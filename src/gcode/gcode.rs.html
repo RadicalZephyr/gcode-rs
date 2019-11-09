@@ -285,12 +285,12 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">major_number</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
         <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">number</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0.0</span>);
 
-        <span class="self">self</span>.<span class="ident">number</span>.<span class="ident">floor</span>() <span class="kw">as</span> <span class="ident">u32</span>
+        <span class="ident">libm</span>::<span class="ident">floorf</span>(<span class="self">self</span>.<span class="ident">number</span>) <span class="kw">as</span> <span class="ident">u32</span>
     }
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">minor_number</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
-        <span class="kw">let</span> <span class="ident">fract</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">number</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">number</span>.<span class="ident">floor</span>();
-        <span class="kw">let</span> <span class="ident">digit</span> <span class="op">=</span> (<span class="ident">fract</span> <span class="op">*</span> <span class="number">10.0</span>).<span class="ident">round</span>();
+        <span class="kw">let</span> <span class="ident">fract</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">number</span> <span class="op">-</span> <span class="ident">libm</span>::<span class="ident">floorf</span>(<span class="self">self</span>.<span class="ident">number</span>);
+        <span class="kw">let</span> <span class="ident">digit</span> <span class="op">=</span> <span class="ident">libm</span>::<span class="ident">roundf</span>(<span class="ident">fract</span> <span class="op">*</span> <span class="number">10.0</span>);
         <span class="ident">digit</span> <span class="kw">as</span> <span class="ident">u32</span>
     }
 
